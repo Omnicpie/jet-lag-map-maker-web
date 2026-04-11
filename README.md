@@ -1,75 +1,26 @@
-# React + TypeScript + Vite
+# Jet Lag: The Game Hide & Seek Map Maker UK 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React Web application, bootstrapped using vite, for the creation of maps for Jet Lag: The Game Hide And Seek.
 
-Currently, two official plugins are available:
+> [!WARNING]
+> This is a Work in Progress, and is currently not recommended for use.
+> When V1.0 is released, that will mark the point where this becomes a beta, and can be used.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Versions
 
-## React Compiler
+Node: 23.0.0
+pnpm: 10.33.0
+vite: 8.0.0
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Running the application
 
-Note: This will impact Vite dev & build performances.
+1. clone the repo
+2. run `cd jet-lag-map-maker-web`
+3. run `pnpm install`
+4. run `pnpm dev`
 
-## Expanding the ESLint configuration
+The web app will then be running on `localhost:5173`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Contributing
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Contributions are not currently accepted until v1 is released, but you are free to fork this repo at any point any make any changes.
