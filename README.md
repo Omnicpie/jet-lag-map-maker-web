@@ -8,9 +8,9 @@ A React Web application, bootstrapped using vite, for the creation of maps for J
 
 ## Versions
 
-Node: 23.0.0
-pnpm: 10.33.0
-vite: 8.0.0
+* Node: 23.0.0
+* pnpm: 10.33.0
+* vite: 8.0.0
 
 ## Running the application
 
