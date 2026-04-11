@@ -1,12 +1,12 @@
 {
   "name": "jet-lag-map-maker-web",
   "private": true,
-  "version": "0.0.3",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "deploy:staging": "gh-pages -b test -d build",
+    "deploy:test": "pnpm build && gh-pages -b test -d dist",
     "lint": "eslint .",
     "preview": "vite preview",
     "postversion": "git push && pnpm deploy:test"
