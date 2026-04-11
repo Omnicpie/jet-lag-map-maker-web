@@ -25,6 +25,11 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
+      - name: Setup Vals
+        run: |
+          git config --global user.email "system@ryananderson.uk"
+          git config --global user.name "system"
+
       - name: Install dependencies
         run: pnpm install
 
