@@ -1,5 +1,7 @@
 import type { JSXElementConstructor, ReactElement, ReactNode } from "react";
 import type { Tab } from "../../types/Tab";
+import "./Layout.css";
+import Sidebar from "../Sidebar/Sidebar";
 
 type LayoutProps = {
   children:
@@ -13,8 +15,8 @@ type LayoutProps = {
 const Layout = ({ children, currentTab }: LayoutProps) => {
   return (
     <div className="layout-container">
-      {currentTab === "new" ? <div className="sidebar">sidebar</div> : null}
-      {children}
+      {currentTab === "new" ? <Sidebar /> : null}
+      <div className="layout-page">{children}</div>
     </div>
   );
 };

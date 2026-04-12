@@ -1,0 +1,19 @@
+.layout-container {
+  display: flex;
+
+  .sidebar {
+    width: 350px;
+    transition: 300ms ease-in-out;
+    border-right: 1px solid black;
+
+    &.collapse {
+      width: 50px;
+    }
+  }
+
+  .layout-page {
+    flex: 1;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+}

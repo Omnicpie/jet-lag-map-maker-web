@@ -1,0 +1,30 @@
+.lb-container {
+  display: flex;
+  position: fixed;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  text-align: center;
+  height: 60px;
+  font-size: 13px;
+  user-select: none;
+  cursor: pointer;
+  bottom: 0;
+
+  .lb-icon {
+    width: 50px;
+    min-width: 50px;
+  }
+
+  .lb-text {
+    width: 300px;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: 300ms ease-in-out;
+
+    &.collapse {
+      width: 0px;
+    }
+  }
+}
