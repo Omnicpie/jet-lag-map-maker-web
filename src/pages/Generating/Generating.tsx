@@ -36,7 +36,9 @@ const Generating = ({ setCurrentTab }: GeneratingProps) => {
   return (
     <div className="generating-page">
       <h1>Generating...</h1>
-      <div className="progress-bar">{progress}%</div>
+      <div className="progress-bar">
+        <div className="bar" style={{ width: `${progress}%` }} />
+      </div>
       <button onClick={cancel}>Cancel</button>
     </div>
   );
