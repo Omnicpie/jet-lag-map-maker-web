@@ -1,0 +1,28 @@
+.new-page {
+  margin: auto;
+  align-self: center;
+  border: 1px solid ghostwhite;
+  padding: 48px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .logo {
+    margin-bottom: 24px;
+
+    h1,
+    h3 {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 100px;
+    }
+  }
+
+  button {
+    display: block;
+    margin: auto;
+  }
+}
