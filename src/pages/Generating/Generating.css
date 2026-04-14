@@ -1,0 +1,19 @@
+.generating-page {
+  margin: auto;
+  align-self: center;
+  padding: 48px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h1 {
+    margin: 0;
+    margin-bottom: 24px;
+  }
+
+  button {
+    display: block;
+    margin: auto;
+  }
+}
