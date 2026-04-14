@@ -1,16 +1,7 @@
 import Map from "@vis.gl/react-maplibre";
-import type { Tab } from "../../types/Tab";
 import "./Complete.css";
 
-type CompleteProps = {
-  setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
-};
-
-const Complete = ({ setCurrentTab }: CompleteProps) => {
-  const progressPhase = () => {
-    setCurrentTab("new");
-  };
-
+const Complete = () => {
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   return (

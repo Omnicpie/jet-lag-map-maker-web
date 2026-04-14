@@ -8,7 +8,7 @@ import Generating from "../pages/Generating/Generating";
 import Confirm from "../pages/Confirm/Confirm";
 
 const App = () => {
-  const [currentTab, setCurrentTab] = useState<Tab>("complete");
+  const [currentTab, setCurrentTab] = useState<Tab>("new");
 
   const tabContant = useMemo(() => {
     switch (currentTab) {
@@ -19,7 +19,7 @@ const App = () => {
       case "confirm":
         return <Confirm setCurrentTab={setCurrentTab} />;
       case "complete":
-        return <Complete setCurrentTab={setCurrentTab} />;
+        return <Complete />;
       default:
         return <New setCurrentTab={setCurrentTab} />;
     }
