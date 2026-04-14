@@ -16,5 +16,9 @@
     height: 100vh;
     overflow-y: scroll;
     display: flex;
+
+    &.complete {
+      overflow-y: hidden;
+    }
   }
 }

@@ -16,7 +16,7 @@ const Layout = ({ children, currentTab }: LayoutProps) => {
   return (
     <div className="layout-container">
       {currentTab === "new" ? <Sidebar /> : null}
-      <div className="layout-page">{children}</div>
+      <div className={`layout-page ${currentTab}`}>{children}</div>
     </div>
   );
 };
