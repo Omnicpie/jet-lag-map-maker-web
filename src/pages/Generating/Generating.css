@@ -1,0 +1,55 @@
+.generating-page {
+  margin: auto;
+  align-self: center;
+  padding: 48px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h1 {
+    margin: 0;
+    margin-bottom: 24px;
+  }
+
+  .progress-bar {
+    height: 24px;
+    border: 1px solid papayawhip;
+    overflow: hidden; /* Important for border-radius on fill */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+    border-radius: 10px;
+    width: 200%;
+    max-width: 80vw;
+    align-self: center;
+
+    .bar {
+      height: 24px;
+      background-color: rebeccapurple;
+      transition: width 0.6s ease;
+
+      background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 1rem 1rem;
+      animation: stripes-animate 1s linear infinite;
+    }
+  }
+
+  button {
+    display: block;
+    margin: auto;
+  }
+}
+
+@keyframes stripes-animate {
+  0% {
+    background-position-x: 1rem;
+  }
+}
