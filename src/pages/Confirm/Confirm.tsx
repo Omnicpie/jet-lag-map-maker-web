@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Tab } from "../../types/Tab";
 import "./Confirm.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import ResultsDesktop from "./ResultsDesktop/ResultsDesktop";
 import ResultsMobile from "./ResultsMobile/ResultsMobile";
+import { csvToJsonRegex } from "../../utils/parse/parse.utils";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 type ConfirmProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
@@ -16,7 +18,7 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
     { name: "Newton-le-Willows" },
     { name: "Walsden" },
   ]);
-  const [stations] = useState([
+  const [stations, setStations] = useState([
     {
       name: "Liverpool Lime Street",
       found: {
@@ -50,12 +52,32 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
     setCurrentTab("complete");
   };
 
+  useEffect(() => {
+    fetch("stations.csv")
+      .then((res) => {
+        res.text().then((data) => {
+          const x = JSON.parse(csvToJsonRegex(data));
+          setStations(
+            // @ts-expect-error not typed, mock data
+            x.map((val) => ({
+              name: val.name,
+              found: { name: val.name, lon: val.longitude, lat: val.latitude },
+            })),
+          );
+        });
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="confirm-page">
       <div className="header">
         <div className="left-side">
           <h2>Results</h2>
-          <span>360/365 Stations encoded</span>
+          <span>
+            {stations.length}/{stations.length + failedLookups.length} Stations
+            encoded
+          </span>
         </div>
 
         <button onClick={progressPhase}>Confirm</button>

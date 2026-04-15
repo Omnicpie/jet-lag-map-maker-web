@@ -49,6 +49,10 @@
 
   .right-side {
     flex: 1;
+
+    .popup-content {
+      color: black;
+    }
   }
 }
 

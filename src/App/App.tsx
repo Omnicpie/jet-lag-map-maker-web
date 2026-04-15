@@ -8,7 +8,7 @@ import Generating from "../pages/Generating/Generating";
 import Confirm from "../pages/Confirm/Confirm";
 
 const App = () => {
-  const [currentTab, setCurrentTab] = useState<Tab>("new");
+  const [currentTab, setCurrentTab] = useState<Tab>("confirm");
 
   const tabContant = useMemo(() => {
     switch (currentTab) {
