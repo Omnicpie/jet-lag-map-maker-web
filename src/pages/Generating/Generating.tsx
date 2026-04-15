@@ -24,7 +24,7 @@ const Generating = ({ setCurrentTab }: GeneratingProps) => {
   useEffect(() => {
     const int = setInterval(() => {
       setProgress((p) => p + 1);
-    }, 150);
+    }, 50);
 
     return () => {
       clearInterval(int);
