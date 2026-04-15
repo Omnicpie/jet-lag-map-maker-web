@@ -6,12 +6,14 @@ import ResultsDesktop from "./ResultsDesktop/ResultsDesktop";
 import ResultsMobile from "./ResultsMobile/ResultsMobile";
 import { csvToJsonRegex } from "../../utils/parse/parse.utils";
 import "maplibre-gl/dist/maplibre-gl.css";
+import type { StationResult } from "../../types/StationResult";
 
 type ConfirmProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
 };
 
 const Confirm = ({ setCurrentTab }: ConfirmProps) => {
+  const [open, setOpen] = useState<StationResult | undefined>();
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const [failedLookups] = useState([
     { name: "Moston" },
@@ -95,9 +97,9 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
       <div className="results">
         <h3>Stations</h3>
         {isMobile ? (
-          <ResultsMobile items={stations} />
+          <ResultsMobile items={stations} setOpen={setOpen} open={open} />
         ) : (
-          <ResultsDesktop items={stations} />
+          <ResultsDesktop items={stations} setOpen={setOpen} open={open} />
         )}
       </div>
     </div>
