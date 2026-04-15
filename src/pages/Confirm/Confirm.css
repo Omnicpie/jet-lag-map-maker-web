@@ -25,3 +25,22 @@
     border-bottom: 1px solid;
   }
 }
+
+@media (max-width: 1024px) {
+  .confirm-page {
+    .results {
+      padding-bottom: 12vh;
+    }
+
+    .confirm-button {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 10%;
+      border-radius: 0;
+
+      font-size: 20px;
+    }
+  }
+}

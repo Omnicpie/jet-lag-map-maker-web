@@ -26,3 +26,20 @@
     margin: auto;
   }
 }
+
+@media (max-width: 1024px) {
+  .new-page {
+    border: none;
+
+    button {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 10%;
+      border-radius: 0;
+
+      font-size: 20px;
+    }
+  }
+}
