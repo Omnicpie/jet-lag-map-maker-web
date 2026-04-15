@@ -8,13 +8,18 @@
   -moz-osx-font-smoothing: grayscale;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
-  @media (max-width: 1024px) {
+  --background: #ffffff;
+  --border: #000;
+
+  @media screen and (max-width: 1024px) {
     font-size: 16px;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --background: #1c1b22;
+    --border: #ffffff;
   }
 }
 

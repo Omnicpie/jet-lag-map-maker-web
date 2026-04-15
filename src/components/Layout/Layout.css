@@ -11,6 +11,22 @@
     }
   }
 
+  @media (max-width: 1024px) {
+    .sidebar {
+      position: fixed;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--background);
+      left: 0;
+
+      &.collapse {
+        width: 100vw;
+        left: -100vw;
+      }
+    }
+  }
+
   .layout-page {
     flex: 1;
     height: 100vh;
