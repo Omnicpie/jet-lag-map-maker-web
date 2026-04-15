@@ -82,7 +82,9 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
           </span>
         </div>
 
-        <button onClick={progressPhase}>Confirm</button>
+        <button className="confirm-button" onClick={progressPhase}>
+          Confirm
+        </button>
       </div>
       <div className="failed-results">
         <h3>Failed Lookups</h3>
