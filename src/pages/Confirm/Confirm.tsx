@@ -3,7 +3,7 @@ import type { Tab } from "../../types/Tab";
 import "./Confirm.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import ResultsDesktop from "./ResultsDesktop/ResultsDesktop";
-import ResultsMobile from "./ResultsMobile/Resultsmobile";
+import ResultsMobile from "./ResultsMobile/ResultsMobile";
 
 type ConfirmProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
