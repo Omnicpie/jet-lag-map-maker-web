@@ -54,8 +54,8 @@ const ModalContent = ({ station, setOpen }: ModalContentProps) => {
             style={{ width: "100%" }}
             mapStyle={
               prefersDark
-                ? "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
-                : "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+                ? "https://api.maptiler.com/maps/019d9342-d80e-77bf-b55c-cbff099f30f3/style.json?key=DADVHIhWafeGl3MV00CL"
+                : "https://api.maptiler.com/maps/019d9342-c125-7d89-a536-728e04bcfef6/style.json?key=DADVHIhWafeGl3MV00CL"
             }
           >
             <FullscreenControl position="top-right" />
