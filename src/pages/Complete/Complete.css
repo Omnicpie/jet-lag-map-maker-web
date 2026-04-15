@@ -3,6 +3,10 @@
   flex: 1;
   text-align: left;
 
+  .mobile-menu {
+    display: none;
+  }
+
   .left-side {
     flex: 1;
     border-right: 1px solid;
@@ -45,5 +49,31 @@
 
   .right-side {
     flex: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .complete-page {
+    .mobile-menu {
+      display: block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
+    }
+
+    .left-side {
+      padding-top: 64px;
+    }
+
+    .left-side,
+    .right-side {
+      z-index: 1;
+      display: none;
+
+      &.open {
+        display: block;
+      }
+    }
   }
 }

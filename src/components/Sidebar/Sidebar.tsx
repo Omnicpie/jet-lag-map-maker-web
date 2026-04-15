@@ -1,18 +1,33 @@
 import { useState } from "react";
 import "./Sidebar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretRight,
+  faCaretLeft,
+  faTimes,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
+import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
+
+const icons = {
+  mobile: { open: faTimes, closed: faBars },
+  desk: { open: faCaretLeft, closed: faCaretRight },
+};
 
 const Sidebar = () => {
-  const [open, setOpen] = useState(true);
+  const isMobile = useMediaQuery("(max-width: 1024px)");
+  const [open, setOpen] = useState(!isMobile);
+
+  const type = isMobile ? "mobile" : "desk";
+  const state = open ? "open" : "closed";
 
   return (
     <div className={`sidebar${open ? "" : " collapse"}`}>
       <div className={`lb-container`} onClick={() => setOpen((p) => !p)}>
         <div className="lb-icon">
           <FontAwesomeIcon
-            icon={open ? faCaretLeft : faCaretRight}
-            size={"lg"}
+            icon={icons[type][state]}
+            size={isMobile ? "2xl" : "lg"}
             title={"Collapse"}
             className=""
           />

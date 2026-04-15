@@ -1,12 +1,24 @@
 import Map from "@vis.gl/react-maplibre";
 import "./Complete.css";
+import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMap, faTable } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const Complete = () => {
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+  const [mapOpen, setMapOpen] = useState(false);
 
   return (
     <div className="complete-page">
-      <div className="left-side">
+      <div className="mobile-menu" onClick={() => setMapOpen((p) => !p)}>
+        <FontAwesomeIcon
+          icon={mapOpen ? faTable : faMap}
+          size="2xl"
+          className=""
+        />
+      </div>
+      <div className={`left-side${!mapOpen ? " open" : ""}`}>
         <h2>Files ({2})</h2>
         <table>
           <thead>
@@ -35,7 +47,7 @@ const Complete = () => {
           </div>
         </div>
       </div>
-      <div className="right-side">
+      <div className={`right-side${mapOpen ? " open" : ""}`}>
         <Map
           initialViewState={{
             latitude: 55,

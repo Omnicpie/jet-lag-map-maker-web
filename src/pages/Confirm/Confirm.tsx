@@ -1,12 +1,16 @@
 import { useState } from "react";
 import type { Tab } from "../../types/Tab";
 import "./Confirm.css";
+import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
+import ResultsDesktop from "./ResultsDesktop/ResultsDesktop";
+import ResultsMobile from "./ResultsMobile/Resultsmobile";
 
 type ConfirmProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
 };
 
 const Confirm = ({ setCurrentTab }: ConfirmProps) => {
+  const isMobile = useMediaQuery("(max-width: 1024px)");
   const [failedLookups] = useState([
     { name: "Moston" },
     { name: "Newton-le-Willows" },
@@ -68,28 +72,11 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
       </div>
       <div className="results">
         <h3>Stations</h3>
-        <table>
-          <thead>
-            <th>Lookup Name</th>
-            <th>Matched Station</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            {stations.map((item) => (
-              <tr key={item.name}>
-                <td>{item.name}</td>
-                <td>
-                  [{item.found.code}] {item.found.name}
-                </td>
-                <td>{item.found.lat}</td>
-                <td>{item.found.lon}</td>
-                <td></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {isMobile ? (
+          <ResultsMobile items={stations} />
+        ) : (
+          <ResultsDesktop items={stations} />
+        )}
       </div>
     </div>
   );
