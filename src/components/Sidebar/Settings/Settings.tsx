@@ -52,12 +52,14 @@ const Settings = () => {
         onChange={(v) => setField("lookupTool", v.value)}
         value={lookupTool}
         getDispayValue={(v) =>
-          ({ npm: "NPM Package", google: "Google", neo: "Neometer" })[v] || ""
+          ({ npm: "NPM Package", google: "Google", nominatim: "Nominatim" })[
+            v
+          ] || ""
         }
         options={[
           { label: "NPM Package", value: "npm" },
           { label: "Google", value: "google" },
-          { label: "Neometer", value: "neo" },
+          { label: "Nominatim", value: "nominatim" },
         ]}
       />
       {lookupTool === "google" ? (

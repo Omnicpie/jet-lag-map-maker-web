@@ -98,7 +98,7 @@
 
     .toggle-switch-dot {
       background-color: var(--background-3);
-      border-color: var(--background-3);
+      border-color: var(--border);
     }
   }
 }

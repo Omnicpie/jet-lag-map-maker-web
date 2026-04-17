@@ -21,6 +21,15 @@
     }
   }
 
+  .infobox {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--background-2);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
   button {
     display: block;
     margin: auto;
