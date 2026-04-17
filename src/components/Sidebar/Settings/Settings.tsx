@@ -16,7 +16,9 @@ const Settings = () => {
         label="Units"
         onChange={(v) => setField("units", v.value)}
         value={units}
-        getDispayValue={(v) => `${v[0].toUpperCase()}${v.slice(1)}`}
+        getDispayValue={(v) =>
+          v ? `${v[0]?.toUpperCase?.()}${v.slice(1)}` : ""
+        }
         options={[
           { label: "Metric", value: "metric" },
           { label: "Imperial", value: "imperial" },
