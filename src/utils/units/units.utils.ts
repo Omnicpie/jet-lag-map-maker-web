@@ -4,6 +4,7 @@ import type { Unit } from "../../types/Unit";
 export const getDistanceUnit = (unit: Unit) => {
   if (unit === "metric") return "km";
   if (unit === "imperial") return "mile";
+  return "unknown";
 };
 
 export const getZoneSize = (
