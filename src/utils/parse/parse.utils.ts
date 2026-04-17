@@ -25,3 +25,12 @@ export function csvToJsonRegex(csvString: string) {
   }
   return JSON.stringify(jsonData);
 }
+
+export const safeParse = (str?: string | null) => {
+  try {
+    return JSON.parse(str || "null") as object;
+  } catch (e) {
+    console.log("Could not parse JSON:", e);
+    return { error: str };
+  }
+};

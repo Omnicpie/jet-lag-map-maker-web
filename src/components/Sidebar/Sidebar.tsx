@@ -8,6 +8,7 @@ import {
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
+import Settings from "./Settings/Settings";
 
 const icons = {
   mobile: { open: faTimes, closed: faBars },
@@ -23,6 +24,7 @@ const Sidebar = () => {
 
   return (
     <div className={`sidebar${open ? "" : " collapse"}`}>
+      {open ? <Settings /> : null}
       <div className={`lb-container`} onClick={() => setOpen((p) => !p)}>
         <div className="lb-icon">
           <FontAwesomeIcon

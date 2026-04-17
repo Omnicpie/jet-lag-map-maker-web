@@ -7,6 +7,7 @@
   text-shadow: none;
   cursor: pointer;
   border-radius: 4px;
+  color: var(--text);
 
   &:hover {
     background-color: var(--background-3);
