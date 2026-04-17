@@ -7,6 +7,7 @@ import ResultsMobile from "./ResultsMobile/ResultsMobile";
 import { csvToJsonRegex } from "../../utils/parse/parse.utils";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { StationResult } from "../../types/StationResult";
+import Button from "../../components/Button/Button";
 
 type ConfirmProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
@@ -82,16 +83,19 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
           </span>
         </div>
 
-        <button className="confirm-button" onClick={progressPhase}>
-          Confirm
-        </button>
+        <Button
+          onClick={progressPhase}
+          label="Confirm"
+          className="confirm-button"
+        />
       </div>
       <div className="failed-results">
         <h3>Failed Lookups</h3>
         <ul>
           {failedLookups.map((item) => (
             <li key={item.name}>
-              {item.name} <button>Add</button>
+              {item.name}{" "}
+              <Button label="Add" onClick={() => {}} className="small" />
             </li>
           ))}
         </ul>

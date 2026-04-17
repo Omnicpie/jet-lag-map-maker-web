@@ -9,6 +9,8 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
   --background: #ffffff;
+  --background-2: #cccccc;
+  --background-3: #b9b9b9;
   --border: #000;
 
   @media screen and (max-width: 1024px) {
@@ -19,6 +21,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #1c1b22;
+    --background-2: #292929;
+    --background-3: #363636;
     --border: #ffffff;
   }
 }

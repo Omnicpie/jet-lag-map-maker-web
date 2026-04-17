@@ -3,6 +3,7 @@ import type { StationResult } from "../../../types/StationResult";
 import "./ResultsDesktop.css";
 import { type Dispatch, type SetStateAction } from "react";
 import ModalContent from "./ModalContent/ModalContent";
+import Button from "../../../components/Button/Button";
 
 type ResultsDesktopProps = {
   items: StationResult[];
@@ -37,7 +38,12 @@ const ResultsDesktop = ({ items, setOpen, open }: ResultsDesktopProps) => {
               <td>{item.found.lat}</td>
               <td>{item.found.lon}</td>
               <td>
-                <button onClick={() => displayModal(item)}>View</button>
+                <Button className="action" label="Edit" onClick={() => {}} />
+                <Button
+                  className="action"
+                  label="View"
+                  onClick={() => displayModal(item)}
+                />
               </td>
             </tr>
           ))}

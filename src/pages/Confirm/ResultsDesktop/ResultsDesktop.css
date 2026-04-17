@@ -14,4 +14,10 @@
   th {
     padding: 4px 8px;
   }
+
+  td {
+    .action:nth-of-type(odd) {
+      margin-right: 4px;
+    }
+  }
 }
