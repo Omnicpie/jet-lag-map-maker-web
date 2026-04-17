@@ -6,6 +6,9 @@ type InputProps = {
   onChange: ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
   className?: string;
   value: string;
+  label?: string;
+  wrapped?: boolean;
+  disabled?: boolean;
 };
 
 const Input = ({
@@ -13,14 +16,37 @@ const Input = ({
   onChange,
   className = "",
   value,
+  label,
+  wrapped = false,
+  disabled = false,
 }: InputProps) => {
+  if (wrapped) {
+    return (
+      <div className="input-wrapper">
+        {label ? <label htmlFor={label}> {label}</label> : null}
+        <input
+          onChange={onChange}
+          className={`input ${className}`}
+          value={value}
+          placeholder={placeholder}
+          id={label}
+          disabled={disabled}
+        />
+      </div>
+    );
+  }
+
   return (
-    <input
-      onChange={onChange}
-      className={`input ${className}`}
-      value={value}
-      placeholder={placeholder}
-    />
+    <>
+      {label ? <label htmlFor={label}> {label}</label> : null}
+      <input
+        onChange={onChange}
+        className={`input ${className}`}
+        value={value}
+        placeholder={placeholder}
+        id={label}
+      />
+    </>
   );
 };
 
