@@ -3,6 +3,7 @@ import type { StationResult } from "../../../types/StationResult";
 import "./ResultsMobile.css";
 import { createPortal } from "react-dom";
 import ModalContent from "./ModalContent/ModalContent";
+import Button from "../../../components/Button/Button";
 
 type ResultsMobileProps = {
   items: StationResult[];
@@ -31,8 +32,8 @@ const ResultsMobile = ({ items, setOpen, open }: ResultsMobileProps) => {
               <span>Long:{item.found.lon}</span>
             </span>
             <div className="actions">
-              <button>Edit</button>
-              <button onClick={() => displayModal(item)}>View</button>
+              <Button label="Edit" onClick={() => {}} />
+              <Button label="View" onClick={() => displayModal(item)} />
             </div>
           </div>
         ))}

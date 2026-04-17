@@ -4,6 +4,7 @@ import "./Generating.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import Button from "../../components/Button/Button";
 
 type GeneratingProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
@@ -53,7 +54,7 @@ const Generating = ({ setCurrentTab }: GeneratingProps) => {
           />
         </div>
       ) : (
-        <button onClick={cancel}>Cancel</button>
+        <Button label="Cancel" onClick={cancel} />
       )}
     </div>
   );
