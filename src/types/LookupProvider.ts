@@ -1,1 +1,1 @@
-export type LookupProvider = "npm" | "google" | "neo";
+export type LookupProvider = "npm" | "google" | "nominatim";

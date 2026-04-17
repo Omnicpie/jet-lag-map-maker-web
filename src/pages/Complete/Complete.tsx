@@ -12,10 +12,13 @@ import { faMap, faTable } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { csvToJsonRegex } from "../../utils/parse/parse.utils";
 import type { StationResult } from "../../types/StationResult";
+import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch";
 
 const Complete = () => {
   const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
   const [mapOpen, setMapOpen] = useState(false);
+  const [showStations, setShowStations] = useState(true);
+  const [showHidingZones, setShowHidingZones] = useState(true);
   const [stations, setStations] = useState<StationResult[]>([]);
   const [popupInfo, setPopupInfo] = useState<StationResult | undefined>();
 
@@ -69,8 +72,21 @@ const Complete = () => {
         <div className="map-controls">
           <h4>Map Controls</h4>
           <div className="map-control-inner">
-            <div>Show stations</div>
-            <div>Show hiding zones</div>
+            <div className="map-action">
+              Show stations
+              <ToggleSwitch
+                checked={showStations}
+                handleChange={setShowStations}
+              />
+            </div>
+            <div className="map-action">
+              Show hiding zones
+              <ToggleSwitch
+                checked={showHidingZones}
+                handleChange={setShowHidingZones}
+                disabled
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -92,39 +108,41 @@ const Complete = () => {
           <FullscreenControl position="top-right" />
           <NavigationControl position="top-right" />
           <ScaleControl />
-          {stations.map((station) => (
-            <Marker
-              latitude={station.found.lat}
-              longitude={station.found.lon}
-              key={station.found.name}
-              onClick={(e) => {
-                e.originalEvent.stopPropagation();
-                setPopupInfo(station);
-              }}
-            >
-              <div
-                style={{
-                  backgroundColor: "red",
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  boxShadow: "2px 2px #88888820",
-                }}
-              >
-                <div
-                  style={{
-                    backgroundColor: "white",
-                    width: 4,
-                    height: 4,
-                    borderRadius: "50%",
+          {showStations
+            ? stations.map((station) => (
+                <Marker
+                  latitude={station.found.lat}
+                  longitude={station.found.lon}
+                  key={station.found.name}
+                  onClick={(e) => {
+                    e.originalEvent.stopPropagation();
+                    setPopupInfo(station);
                   }}
-                />
-              </div>
-            </Marker>
-          ))}
+                >
+                  <div
+                    style={{
+                      backgroundColor: "red",
+                      width: 10,
+                      height: 10,
+                      borderRadius: "50%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      boxShadow: "2px 2px #88888820",
+                    }}
+                  >
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        width: 4,
+                        height: 4,
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+                </Marker>
+              ))
+            : null}
 
           {popupInfo && (
             <Popup
