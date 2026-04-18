@@ -7,13 +7,15 @@ import useSettings from "../../hooks/useSettings/useSettings";
 
 type NewProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
+  setRoverLink: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const New = ({ setCurrentTab }: NewProps) => {
+const New = ({ setCurrentTab, setRoverLink }: NewProps) => {
   const [value, setValue] = useState("");
   const { gamesize, units, lookupTool } = useSettings();
 
   const progressPhase = () => {
+    setRoverLink(value);
     setCurrentTab("generating");
   };
 
@@ -49,7 +51,7 @@ const New = ({ setCurrentTab }: NewProps) => {
         value={value}
         onChange={handleInputChange}
       />
-      <Button label="Generate" onClick={progressPhase} />
+      <Button label="Generate" onClick={progressPhase} disabled={!value} />
     </div>
   );
 };
