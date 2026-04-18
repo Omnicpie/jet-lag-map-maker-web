@@ -10,6 +10,7 @@ import useSettings from "../hooks/useSettings/useSettings";
 
 const App = () => {
   const [currentTab, setCurrentTab] = useState<Tab>("new");
+  const [roverLink, setRoverLink] = useState("");
   const { setSettings } = useSettings();
 
   useEffect(() => {
@@ -27,17 +28,27 @@ const App = () => {
   const tabContant = useMemo(() => {
     switch (currentTab) {
       case "new":
-        return <New setCurrentTab={setCurrentTab} />;
+        return (
+          <New setCurrentTab={setCurrentTab} setRoverLink={setRoverLink} />
+        );
       case "generating":
-        return <Generating setCurrentTab={setCurrentTab} />;
+        return (
+          <Generating
+            setCurrentTab={setCurrentTab}
+            roverLink={roverLink}
+            setRoverLink={setRoverLink}
+          />
+        );
       case "confirm":
         return <Confirm setCurrentTab={setCurrentTab} />;
       case "complete":
         return <Complete />;
       default:
-        return <New setCurrentTab={setCurrentTab} />;
+        return (
+          <New setCurrentTab={setCurrentTab} setRoverLink={setRoverLink} />
+        );
     }
-  }, [currentTab]);
+  }, [currentTab, roverLink]);
 
   return <Layout currentTab={currentTab}>{tabContant}</Layout>;
 };
