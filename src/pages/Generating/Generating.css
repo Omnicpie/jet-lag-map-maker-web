@@ -7,6 +7,15 @@
   flex-direction: column;
   gap: 16px;
 
+  .error-message {
+    position: absolute;
+    z-index: 3;
+    background-color: var(--red);
+    padding: 8px;
+    align-self: center;
+    margin-top: -40px;
+  }
+
   h1 {
     margin: 0;
     margin-bottom: 24px;

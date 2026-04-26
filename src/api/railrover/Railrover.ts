@@ -1,11 +1,10 @@
+import apiCall from "./apiCaller";
+
 class Railrover {
   static get(url: string, signal: AbortSignal) {
-    return fetch(url, {
-      signal,
-      headers: {
-        "User-Agent": "omnic-jet-lag-hide-seek-map-maker/1.0",
-      },
-    });
+    return apiCall("GET", `railrover?railroverUrl=${url}`, signal) as Promise<
+      string[]
+    >;
   }
 }
 
