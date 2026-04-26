@@ -9,35 +9,18 @@ import "./Complete.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap, faTable } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { csvToJsonRegex } from "../../utils/parse/parse.utils";
+import { useState } from "react";
 import type { StationResult } from "../../types/StationResult";
 import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch";
+import useResults from "../../hooks/useResults/useResults";
 
 const Complete = () => {
   const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
   const [mapOpen, setMapOpen] = useState(false);
   const [showStations, setShowStations] = useState(true);
   const [showHidingZones, setShowHidingZones] = useState(true);
-  const [stations, setStations] = useState<StationResult[]>([]);
+  const { calculatedStations: stations } = useResults();
   const [popupInfo, setPopupInfo] = useState<StationResult | undefined>();
-
-  useEffect(() => {
-    fetch("stations.csv")
-      .then((res) => {
-        res.text().then((data) => {
-          const x = JSON.parse(csvToJsonRegex(data));
-          setStations(
-            // @ts-expect-error not typed, mock data
-            x.map((val) => ({
-              name: val.name,
-              found: { name: val.name, lon: val.longitude, lat: val.latitude },
-            })),
-          );
-        });
-      })
-      .catch(console.error);
-  }, []);
 
   return (
     <div className="complete-page">

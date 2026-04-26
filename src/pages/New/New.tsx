@@ -1,9 +1,10 @@
-import { useMemo, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import type { Tab } from "../../types/Tab";
 import "./New.css";
 import useSettings from "../../hooks/useSettings/useSettings";
+import useResults from "../../hooks/useResults/useResults";
 
 type NewProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
@@ -13,6 +14,7 @@ type NewProps = {
 const New = ({ setCurrentTab, setRoverLink }: NewProps) => {
   const [value, setValue] = useState("");
   const { gamesize, units, lookupTool } = useSettings();
+  const { setFailedStations, setCalculatedStations } = useResults();
 
   const progressPhase = () => {
     setRoverLink(value);
@@ -31,6 +33,11 @@ const New = ({ setCurrentTab, setRoverLink }: NewProps) => {
     if (gamesize === "custom") return "Custom";
     return "";
   }, [gamesize]);
+
+  useEffect(() => {
+    setCalculatedStations([]);
+    setFailedStations([]);
+  }, []);
 
   return (
     <div className="new-page">

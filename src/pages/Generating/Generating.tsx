@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/Button/Button";
 import Railrover from "../../api/railrover/Railrover";
+import { findStation } from "../../utils/lookup/npm-lookup.utils";
+import useResults from "../../hooks/useResults/useResults";
 
 type GeneratingProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
@@ -19,8 +21,16 @@ const Generating = ({
   setRoverLink,
 }: GeneratingProps) => {
   const isMobile = useMediaQuery("(max-width: 1024px)");
-  const [progress, setProgress] = useState(0);
-  const [loading] = useState(true);
+
+  const [stations, setStations] = useState<string[] | undefined>();
+  const {
+    failedStations,
+    setFailedStations,
+    calculatedStations,
+    setCalculatedStations,
+  } = useResults();
+  const [lookupIndex, setLookupIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const progressPhase = useCallback(() => {
     setCurrentTab("confirm");
@@ -31,38 +41,65 @@ const Generating = ({
     setCurrentTab("new");
   };
 
-  useEffect(() => {
-    if (!loading) {
-      const int = setInterval(() => {
-        setProgress((p) => p + 1);
-      }, 50);
-
-      return () => {
-        clearInterval(int);
-      };
+  const progress = useMemo(() => {
+    if (!loading && stations) {
+      return (lookupIndex / stations?.length) * 100;
     }
-  }, [loading]);
+
+    return 0;
+  }, [loading, lookupIndex, stations]);
+
+  console.log(progress);
 
   useEffect(() => {
     const abort = new AbortController();
     Railrover.get(roverLink, abort.signal)
-      .then(console.log)
-      .catch(console.error);
+      .then((res) => {
+        setStations(res);
+      })
+      .finally(() => setLoading(false));
 
     return () => {
       abort.abort();
     };
   }, []);
 
+  const currentStation = useMemo(() => {
+    if (!stations) return "";
+    return stations[lookupIndex];
+  }, [stations, lookupIndex]);
+
   useEffect(() => {
-    if (progress >= 100) {
+    if (
+      calculatedStations?.length + failedStations.length ===
+      stations?.length
+    ) {
       progressPhase();
     }
-  }, [progress, progressPhase]);
+  }, [stations, calculatedStations, progressPhase, failedStations]);
+
+  useEffect(() => {
+    if (!currentStation) return;
+    const matchedStation = findStation(currentStation);
+    if (!matchedStation) {
+      setFailedStations([...failedStations, currentStation]);
+    } else {
+      setCalculatedStations([...calculatedStations, matchedStation]);
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLookupIndex((prev) => prev + 1);
+  }, [
+    currentStation,
+    failedStations,
+    setCalculatedStations,
+    calculatedStations,
+    setFailedStations,
+  ]);
 
   const loadingStatus = useMemo(() => {
-    return "Phase 1 | 1/3: fetching info from " + roverLink;
-  }, [roverLink]);
+    if (stations) return "2/3 | Pulling Station info: " + currentStation;
+    return "1/3 | Fetching info from " + roverLink;
+  }, [roverLink, currentStation, stations]);
 
   return (
     <div className="generating-page">

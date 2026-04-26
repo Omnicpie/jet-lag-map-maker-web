@@ -32,6 +32,9 @@ importers:
       react-dom:
         specifier: ^19.2.4
         version: 19.2.5(react@19.2.5)
+      uk-railway-stations:
+        specifier: ^1.9.0
+        version: 1.9.0
     devDependencies:
       '@babel/core':
         specifier: ^7.29.0
@@ -1338,6 +1341,9 @@ packages:
 
   typewise@1.0.3:
     resolution: {integrity: sha512-aXofE06xGhaQSPzt8hlTY+/YWQhm9P0jYUp1f2XtmW/3Bk0qzXcyFWAtPoo2uTGQj1ZwbDuSyuxicq+aDo8lCQ==}
+
+  uk-railway-stations@1.9.0:
+    resolution: {integrity: sha512-0EPOrgFij7XhTEdJT+gxl+vRimw+h7JKxuvkhmRJiqsrLrRVy6AYGnxpu7EjFYc6eIDKbtx90cGvXHFvFTGoSg==}
 
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
@@ -2673,6 +2679,8 @@ snapshots:
   typewise@1.0.3:
     dependencies:
       typewise-core: 1.2.0
+
+  uk-railway-stations@1.9.0: {}
 
   undici-types@7.16.0: {}
 

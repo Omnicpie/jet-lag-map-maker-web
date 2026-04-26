@@ -1,3 +1,5 @@
+import { safeParse } from "../../utils/parse/parse.utils";
+
 const apiCall = (verb: "GET", url: string, signal?: AbortSignal) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -5,7 +7,6 @@ const apiCall = (verb: "GET", url: string, signal?: AbortSignal) => {
     xhr.open(verb, url, true);
     xhr.timeout = 10_000;
     xhr.setRequestHeader("User-Agent", "omnic-jet-lag-hide-seek-map-maker/1.0");
-    xhr.setRequestHeader("Origin", "railrover.org");
 
     signal?.addEventListener("abort", () => {
       xhr.abort();
@@ -14,7 +15,7 @@ const apiCall = (verb: "GET", url: string, signal?: AbortSignal) => {
     xhr.send();
 
     xhr.onload = () => {
-      resolve(xhr.responseText);
+      resolve(safeParse(xhr.responseText));
     };
 
     xhr.onabort = () =>
