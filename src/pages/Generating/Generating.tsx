@@ -30,6 +30,7 @@ const Generating = ({
     setCalculatedStations,
   } = useResults();
   const [lookupIndex, setLookupIndex] = useState(0);
+  const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(true);
 
   const progressPhase = useCallback(() => {
@@ -56,6 +57,10 @@ const Generating = ({
     Railrover.get(roverLink, abort.signal)
       .then((res) => {
         setStations(res);
+      })
+      .catch((e) => {
+        console.error(e);
+        setError("Failed to fetch data");
       })
       .finally(() => setLoading(false));
 
@@ -103,6 +108,7 @@ const Generating = ({
 
   return (
     <div className="generating-page">
+      {error ? <div className="error-message">{error}</div> : null}
       <h1>Generating...</h1>
       <div className="progress-bar">
         <div className="bar" style={{ width: `${progress}%` }} />
