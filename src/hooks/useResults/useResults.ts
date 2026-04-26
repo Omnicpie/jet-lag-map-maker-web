@@ -1,17 +1,6 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react";
 import { safeParse } from "../../utils/parse/parse.utils";
-import type { Unit } from "../../types/Unit";
-import type { GameSize } from "../../types/GameSize";
-import type { LookupProvider } from "../../types/LookupProvider";
 import type { StationResult } from "../../types/StationResult";
-
-export type Settings = {
-  units: Unit;
-  gamesize: GameSize;
-  customRadius?: number;
-  lookupTool: LookupProvider;
-  apiKey?: string;
-};
 
 const storageKey = "calculated-stations";
 const changeKey = "calculated-stations-change";
