@@ -8,6 +8,8 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import type { StationResult } from "../../types/StationResult";
 import Button from "../../components/Button/Button";
 import useResults from "../../hooks/useResults/useResults";
+import { createPortal } from "react-dom";
+import StationForm from "./StationForm/StationForm";
 
 type ConfirmProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
@@ -15,6 +17,7 @@ type ConfirmProps = {
 
 const Confirm = ({ setCurrentTab }: ConfirmProps) => {
   const [open, setOpen] = useState<StationResult | undefined>();
+  const [form, setForm] = useState<string | undefined>();
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const { failedStations, calculatedStations } = useResults();
 
@@ -44,7 +47,12 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
         <ul>
           {failedStations.map((item) => (
             <li key={item}>
-              {item} <Button label="Add" onClick={() => {}} className="small" />
+              {item}{" "}
+              <Button
+                label="Add"
+                onClick={() => setForm(item)}
+                className="small"
+              />
             </li>
           ))}
         </ul>
@@ -65,6 +73,13 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
           />
         )}
       </div>
+      {form
+        ? createPortal(
+            <StationForm stationName={form} setOpen={setForm} />,
+            //@ts-expect-error portal root could in theory be null, but never will be
+            document.getElementById("portal-root"),
+          )
+        : null}
     </div>
   );
 };

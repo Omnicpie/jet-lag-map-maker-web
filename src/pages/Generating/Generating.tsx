@@ -6,7 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/Button/Button";
 import Railrover from "../../api/railrover/Railrover";
-import { findStation } from "../../utils/lookup/npm-lookup.utils";
+import {
+  findStation,
+  findStationByLatLong,
+} from "../../utils/lookup/npm-lookup.utils";
 import useResults from "../../hooks/useResults/useResults";
 
 type GeneratingProps = {
@@ -49,8 +52,6 @@ const Generating = ({
 
     return 0;
   }, [loading, lookupIndex, stations]);
-
-  console.log(progress);
 
   useEffect(() => {
     const abort = new AbortController();

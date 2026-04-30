@@ -1,7 +1,7 @@
-import stations from "uk-railway-stations";
+import stations, { type StationData } from "uk-railway-stations";
 import type { StationResult } from "../../types/StationResult";
 
-export const findStation = (station: string): StationResult | null => {
+export const findStations = (station: string): StationResult[] => {
   const needle = station.toLowerCase();
   const matches = stations.filter(
     (s) => s.stationName.toLowerCase() === needle,
@@ -28,7 +28,7 @@ export const findStation = (station: string): StationResult | null => {
           : matches3;
 
   if (finalMatches.length === 0) {
-    return null;
+    return [];
   }
 
   return finalMatches.map((s) => ({
@@ -39,5 +39,54 @@ export const findStation = (station: string): StationResult | null => {
       lon: s.long,
       code: s.crsCode,
     },
-  }))[0];
+  }));
+};
+
+export const findStation = (station: string): StationResult | null => {
+  const stations = findStations(station);
+  return stations[0] || null;
+};
+
+const distanceBetween = (
+  station: StationData,
+  point: { lat: number; long: number },
+) => {
+  const distLats = Math.pow(station.lat - point.lat, 2);
+  const disLongs = Math.pow(station.long - point.long, 2);
+  const distance = Math.sqrt(distLats + disLongs);
+
+  return distance;
+};
+
+export const findStationByLatLong = (
+  lat: number,
+  long: number,
+): StationData | null => {
+  const boundLimit = 0.001;
+  const lats = {
+    lowerBound: lat - boundLimit,
+    actual: lat,
+    upperBound: lat + boundLimit,
+  };
+  const longs = {
+    lowerBound: long - boundLimit,
+    actual: long,
+    upperBound: long + boundLimit,
+  };
+
+  const filterred = stations.filter(
+    (station) =>
+      station.lat >= lats.lowerBound &&
+      station.lat <= lats.upperBound &&
+      station.long >= longs.lowerBound &&
+      station.long <= longs.upperBound,
+  );
+
+  const distanced = filterred.map((station) => ({
+    station,
+    distance: distanceBetween(station, { lat, long }),
+  }));
+  const ordered = distanced.toSorted((a, b) => a.distance - b.distance);
+
+  return ordered[0].station;
 };

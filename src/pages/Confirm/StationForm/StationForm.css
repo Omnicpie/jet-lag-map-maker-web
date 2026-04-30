@@ -1,0 +1,97 @@
+.modal-content {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: #00000020;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .data-container {
+    background-color: var(--background);
+    z-index: 3;
+    min-width: 70%;
+
+    .header {
+      padding: 8px 16px;
+      border-bottom: 1px solid;
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      align-items: center;
+
+      .close-button {
+        cursor: pointer;
+      }
+    }
+
+    .content {
+      min-height: 50vh;
+      width: calc(100% - 32px);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin: 8px 16px;
+
+      .options {
+        /*position: relative;*/
+        z-index: 3;
+
+        button {
+          display: block;
+        }
+      }
+
+      .maplibregl-map {
+        height: unset !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .modal-content {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background-color: var(--background);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: unset;
+    align-items: unset;
+
+    .data-container {
+      .header {
+        padding: 8px 16px;
+        border-bottom: 1px solid;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        .close-button {
+          cursor: pointer;
+          position: fixed;
+          top: 25px;
+          left: 25px;
+        }
+      }
+
+      .content {
+        min-height: 50vh;
+        width: calc(100% - 32px);
+        flex: 1;
+        display: flex;
+
+        .maplibregl-map {
+          height: unset !important;
+        }
+      }
+    }
+  }
+}
