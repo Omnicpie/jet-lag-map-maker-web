@@ -62,7 +62,7 @@ export const findStationByLatLong = (
   lat: number,
   long: number,
 ): StationData | null => {
-  const boundLimit = 0.001;
+  const boundLimit = 0.01;
   const lats = {
     lowerBound: lat - boundLimit,
     actual: lat,
@@ -88,5 +88,5 @@ export const findStationByLatLong = (
   }));
   const ordered = distanced.toSorted((a, b) => a.distance - b.distance);
 
-  return ordered[0].station;
+  return ordered?.[0]?.station || null;
 };
