@@ -36,6 +36,24 @@
       flex-direction: column;
       margin: 8px 16px;
 
+      .instruction {
+        margin: 4px;
+      }
+
+      .infobox {
+        margin-top: 8px;
+        display: flex;
+        gap: 16px;
+        background-color: var(--background-2);
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 12px;
+
+        svg {
+          margin-right: 4px;
+        }
+      }
+
       .options {
         /*position: relative;*/
         z-index: 3;
@@ -47,6 +65,12 @@
 
       .maplibregl-map {
         height: unset !important;
+      }
+
+      .button-group {
+        margin: 16px;
+        display: flex;
+        gap: 8px;
       }
     }
   }

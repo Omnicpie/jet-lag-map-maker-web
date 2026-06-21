@@ -9,7 +9,7 @@ import {
 } from "react";
 import "./StationForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Input from "../../../components/Input/Input";
 import {
   findStationByLatLong,
@@ -77,6 +77,7 @@ const StationForm = ({ stationName, setOpen }: StationFormProps) => {
 
     const stn = findStationByLatLong(mapPoint.lat, mapPoint.lng);
     if (!stn) return;
+
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelected({
       name: stationName,
@@ -104,7 +105,7 @@ const StationForm = ({ stationName, setOpen }: StationFormProps) => {
         </div>
         <div className="content">
           <div></div>
-          <p>Enter a station here</p>
+          <p className="instruction">Enter a station here</p>
           <Input
             value={stationInput}
             onChange={handleStationChange}
@@ -121,8 +122,8 @@ const StationForm = ({ stationName, setOpen }: StationFormProps) => {
               ))}
             </div>
           ) : null}
-          <p>OR</p>
-          <p>Select on the Map</p>
+          <p className="instruction small">OR</p>
+          <p className="instruction">Select on the Map</p>
           <Map
             initialViewState={{
               latitude: 55,
@@ -142,10 +143,61 @@ const StationForm = ({ stationName, setOpen }: StationFormProps) => {
             <NavigationControl position="top-right" />
             <ScaleControl />
             {mapPoint ? (
-              <Marker latitude={mapPoint.lat} longitude={mapPoint.lng} />
+              <Marker latitude={mapPoint.lat} longitude={mapPoint.lng}>
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  size="xl"
+                  className=""
+                  color="red"
+                />
+              </Marker>
+            ) : null}
+            {selected ? (
+              <Marker
+                latitude={selected.found.lat}
+                longitude={selected.found.lon}
+              >
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  size="xl"
+                  className=""
+                  color="purple"
+                />
+              </Marker>
             ) : null}
           </Map>
-          <Button label="Confirm" disabled={!selected} onClick={() => {}} />
+          <div className="infobox">
+            <span>
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                size="xl"
+                className=""
+                color="purple"
+              />
+              Suggested/Input Location
+            </span>
+            <span>
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                size="xl"
+                className=""
+                color="red"
+              />
+              Manually Selected Location
+            </span>
+          </div>
+          <div className="button-group">
+            <Button
+              label="Use Suggested/Input"
+              disabled={!selected}
+              onClick={() => {}}
+            />
+            <Button
+              label="Use Manual"
+              disabled={!mapPoint}
+              onClick={() => {}}
+            />
+          </div>
         </div>
       </div>
     </div>

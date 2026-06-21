@@ -6,10 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/Button/Button";
 import Railrover from "../../api/railrover/Railrover";
-import {
-  findStation,
-  findStationByLatLong,
-} from "../../utils/lookup/npm-lookup.utils";
+import { findStation } from "../../utils/lookup/npm-lookup.utils";
 import useResults from "../../hooks/useResults/useResults";
 
 type GeneratingProps = {
