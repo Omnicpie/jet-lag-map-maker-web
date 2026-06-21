@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { Tab } from "../../types/Tab";
 import "./Confirm.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
@@ -10,6 +10,7 @@ import Button from "../../components/Button/Button";
 import useResults from "../../hooks/useResults/useResults";
 import { createPortal } from "react-dom";
 import StationForm from "./StationForm/StationForm";
+import { upsert } from "../../utils/array/array.utils";
 
 type ConfirmProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
@@ -19,11 +20,33 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
   const [open, setOpen] = useState<StationResult | undefined>();
   const [form, setForm] = useState<string | undefined>();
   const isMobile = useMediaQuery("(max-width: 1024px)");
-  const { failedStations, calculatedStations } = useResults();
+  const {
+    failedStations,
+    calculatedStations,
+    setCalculatedStations,
+    setFailedStations,
+  } = useResults();
 
   const progressPhase = () => {
     setCurrentTab("complete");
   };
+
+  const handleConfirmStation = useCallback(
+    (station: StationResult) => {
+      if (failedStations.includes(station.name)) {
+        setFailedStations(failedStations.filter((s) => s !== station.name));
+      }
+
+      setCalculatedStations(upsert(calculatedStations, station));
+      setForm(undefined);
+    },
+    [
+      failedStations,
+      calculatedStations,
+      setCalculatedStations,
+      setFailedStations,
+    ],
+  );
 
   return (
     <div className="confirm-page">
@@ -75,7 +98,11 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
       </div>
       {form
         ? createPortal(
-            <StationForm stationName={form} setOpen={setForm} />,
+            <StationForm
+              stationName={form}
+              setOpen={setForm}
+              handleConfirmStation={handleConfirmStation}
+            />,
             //@ts-expect-error portal root could in theory be null, but never will be
             document.getElementById("portal-root"),
           )

@@ -30,9 +30,14 @@ import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
 type StationFormProps = {
   stationName: string;
   setOpen: Dispatch<SetStateAction<string | undefined>>;
+  handleConfirmStation: (station: StationResult) => void;
 };
 
-const StationForm = ({ stationName, setOpen }: StationFormProps) => {
+const StationForm = ({
+  stationName,
+  setOpen,
+  handleConfirmStation,
+}: StationFormProps) => {
   const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
   const [stationInput, setStationInput] = useState("");
   const [suggestionsShown, setSuggestionsShow] = useState(false);
@@ -90,6 +95,27 @@ const StationForm = ({ stationName, setOpen }: StationFormProps) => {
     });
     setStationInput(stn?.stationName);
   }, [mapPoint, stationName]);
+
+  const isStationResult = (
+    maybe: StationResult | LngLat,
+  ): maybe is StationResult => (maybe as StationResult).found !== undefined;
+
+  const confirmStation = (station: StationResult | LngLat) => {
+    if (isStationResult(station)) {
+      handleConfirmStation(station);
+    } else {
+      const mapped = {
+        name: stationName,
+        found: {
+          name: stationName,
+          code: "",
+          lat: station.lat,
+          lon: station.lng,
+        },
+      };
+      handleConfirmStation(mapped);
+    }
+  };
 
   return (
     <div className="modal-content" onClick={() => setOpen(undefined)}>
@@ -190,12 +216,12 @@ const StationForm = ({ stationName, setOpen }: StationFormProps) => {
             <Button
               label="Use Suggested/Input"
               disabled={!selected}
-              onClick={() => {}}
+              onClick={() => confirmStation(selected!)}
             />
             <Button
               label="Use Manual"
               disabled={!mapPoint}
-              onClick={() => {}}
+              onClick={() => confirmStation(mapPoint!)}
             />
           </div>
         </div>
