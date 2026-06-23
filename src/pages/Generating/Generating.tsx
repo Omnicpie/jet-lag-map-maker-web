@@ -50,8 +50,6 @@ const Generating = ({
     return 0;
   }, [loading, lookupIndex, stations]);
 
-  console.log(progress);
-
   useEffect(() => {
     const abort = new AbortController();
     Railrover.get(roverLink, abort.signal)

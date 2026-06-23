@@ -84,8 +84,8 @@ const Complete = () => {
           style={{ width: "100%", height: "100%" }}
           mapStyle={
             prefersDark
-              ? "https://api.maptiler.com/maps/019d9342-d80e-77bf-b55c-cbff099f30f3/style.json?key=DADVHIhWafeGl3MV00CL"
-              : "https://api.maptiler.com/maps/019d9342-c125-7d89-a536-728e04bcfef6/style.json?key=DADVHIhWafeGl3MV00CL"
+              ? "https://api.maptiler.com/maps/019de073-e401-7694-8732-d9d20ce78f0a/style.json?key=2RhQVIA8FeGd1TvSEaKb"
+              : "https://api.maptiler.com/maps/019de07c-2b05-745a-ae4a-166bc93e3359/style.json?key=2RhQVIA8FeGd1TvSEaKb"
           }
         >
           <FullscreenControl position="top-right" />

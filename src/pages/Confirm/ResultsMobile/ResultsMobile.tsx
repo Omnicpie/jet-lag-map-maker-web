@@ -9,9 +9,17 @@ type ResultsMobileProps = {
   items: StationResult[];
   open?: StationResult;
   setOpen: Dispatch<SetStateAction<StationResult | undefined>>;
+  setForm: Dispatch<
+    SetStateAction<{ stationName: string; current?: StationResult } | undefined>
+  >;
 };
 
-const ResultsMobile = ({ items, setOpen, open }: ResultsMobileProps) => {
+const ResultsMobile = ({
+  items,
+  setOpen,
+  open,
+  setForm,
+}: ResultsMobileProps) => {
   const displayModal = (item: StationResult) => {
     setOpen(item);
   };
@@ -32,7 +40,12 @@ const ResultsMobile = ({ items, setOpen, open }: ResultsMobileProps) => {
               <span>Long:{item.found.lon}</span>
             </span>
             <div className="actions">
-              <Button label="Edit" onClick={() => {}} />
+              <Button
+                label="Edit"
+                onClick={() =>
+                  setForm({ stationName: item.name, current: item })
+                }
+              />
               <Button label="View" onClick={() => displayModal(item)} />
             </div>
           </div>
