@@ -9,9 +9,17 @@ type ResultsDesktopProps = {
   items: StationResult[];
   open?: StationResult;
   setOpen: Dispatch<SetStateAction<StationResult | undefined>>;
+  setForm: Dispatch<
+    SetStateAction<{ stationName: string; current?: StationResult } | undefined>
+  >;
 };
 
-const ResultsDesktop = ({ items, setOpen, open }: ResultsDesktopProps) => {
+const ResultsDesktop = ({
+  items,
+  setOpen,
+  open,
+  setForm,
+}: ResultsDesktopProps) => {
   const displayModal = (item: StationResult) => {
     setOpen(item);
   };
@@ -38,7 +46,13 @@ const ResultsDesktop = ({ items, setOpen, open }: ResultsDesktopProps) => {
               <td>{item.found.lat}</td>
               <td>{item.found.lon}</td>
               <td>
-                <Button className="action" label="Edit" onClick={() => {}} />
+                <Button
+                  className="action"
+                  label="Edit"
+                  onClick={() =>
+                    setForm({ stationName: item.name, current: item })
+                  }
+                />
                 <Button
                   className="action"
                   label="View"

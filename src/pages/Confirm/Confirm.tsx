@@ -18,7 +18,9 @@ type ConfirmProps = {
 
 const Confirm = ({ setCurrentTab }: ConfirmProps) => {
   const [open, setOpen] = useState<StationResult | undefined>();
-  const [form, setForm] = useState<string | undefined>();
+  const [form, setForm] = useState<
+    { stationName: string; current?: StationResult } | undefined
+  >();
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const {
     failedStations,
@@ -73,7 +75,7 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
               {item}{" "}
               <Button
                 label="Add"
-                onClick={() => setForm(item)}
+                onClick={() => setForm({ stationName: item })}
                 className="small"
               />
             </li>
@@ -86,12 +88,14 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
           <ResultsMobile
             items={calculatedStations}
             setOpen={setOpen}
+            setForm={setForm}
             open={open}
           />
         ) : (
           <ResultsDesktop
             items={calculatedStations}
             setOpen={setOpen}
+            setForm={setForm}
             open={open}
           />
         )}
@@ -99,7 +103,8 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
       {form
         ? createPortal(
             <StationForm
-              stationName={form}
+              stationName={form.stationName}
+              current={form.current}
               setOpen={setForm}
               handleConfirmStation={handleConfirmStation}
             />,

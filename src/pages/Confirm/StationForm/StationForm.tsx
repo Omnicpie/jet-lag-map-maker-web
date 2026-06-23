@@ -29,11 +29,15 @@ import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
 
 type StationFormProps = {
   stationName: string;
-  setOpen: Dispatch<SetStateAction<string | undefined>>;
+  setOpen: Dispatch<
+    SetStateAction<{ stationName: string; current?: StationResult } | undefined>
+  >;
   handleConfirmStation: (station: StationResult) => void;
+  current?: StationResult;
 };
 
 const StationForm = ({
+  current,
   stationName,
   setOpen,
   handleConfirmStation,
@@ -191,6 +195,19 @@ const StationForm = ({
                 />
               </Marker>
             ) : null}
+            {current ? (
+              <Marker
+                latitude={current.found.lat}
+                longitude={current.found.lon}
+              >
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  size="xl"
+                  className=""
+                  color="orange"
+                />
+              </Marker>
+            ) : null}
           </Map>
           <div className="infobox">
             <span>
@@ -211,6 +228,17 @@ const StationForm = ({
               />
               Manually Selected Location
             </span>
+            {current ? (
+              <span>
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  size="xl"
+                  className=""
+                  color="orange"
+                />
+                Current Location
+              </span>
+            ) : null}
           </div>
           <div className="button-group">
             <Button
