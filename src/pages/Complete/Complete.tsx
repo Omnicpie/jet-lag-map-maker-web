@@ -4,6 +4,8 @@ import Map, {
   NavigationControl,
   FullscreenControl,
   ScaleControl,
+  Source,
+  Layer,
 } from "@vis.gl/react-maplibre";
 import "./Complete.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
@@ -19,7 +21,7 @@ const Complete = () => {
   const [mapOpen, setMapOpen] = useState(false);
   const [showStations, setShowStations] = useState(true);
   const [showHidingZones, setShowHidingZones] = useState(true);
-  const { calculatedStations: stations } = useResults();
+  const { calculatedStations: stations, hidingZones } = useResults();
   const [popupInfo, setPopupInfo] = useState<StationResult | undefined>();
 
   return (
@@ -67,7 +69,6 @@ const Complete = () => {
               <ToggleSwitch
                 checked={showHidingZones}
                 handleChange={setShowHidingZones}
-                disabled
               />
             </div>
           </div>
@@ -124,6 +125,20 @@ const Complete = () => {
                     />
                   </div>
                 </Marker>
+              ))
+            : null}
+
+          {showHidingZones
+            ? hidingZones.map((hidingZone) => (
+                <Source type="geojson" data={hidingZone}>
+                  <Layer
+                    id={`${hidingZone.id}`}
+                    type="fill"
+                    paint={{
+                      "fill-color": "#4E3FC8",
+                    }}
+                  />
+                </Source>
               ))
             : null}
 

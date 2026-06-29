@@ -12,7 +12,9 @@ type NewProps = {
 };
 
 const New = ({ setCurrentTab, setRoverLink }: NewProps) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(
+    "http://www.railrover.org/pages/north-west-rover.html",
+  );
   const { gamesize, units, lookupTool } = useSettings();
   const { setFailedStations, setCalculatedStations } = useResults();
 

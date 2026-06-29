@@ -11,6 +11,8 @@ import useResults from "../../hooks/useResults/useResults";
 import { createPortal } from "react-dom";
 import StationForm from "./StationForm/StationForm";
 import { upsert } from "../../utils/array/array.utils";
+import useSettings from "../../hooks/useSettings/useSettings";
+import { calculateZones } from "../../utils/hiding-zones/hiding-zones.utils";
 
 type ConfirmProps = {
   setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
@@ -27,9 +29,13 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
     calculatedStations,
     setCalculatedStations,
     setFailedStations,
+    setHidingZones,
   } = useResults();
+  const options = useSettings();
 
   const progressPhase = () => {
+    const zones = calculateZones(calculatedStations, options);
+    setHidingZones(zones);
     setCurrentTab("complete");
   };
 
