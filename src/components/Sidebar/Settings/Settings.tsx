@@ -41,10 +41,12 @@ const Settings = () => {
 
       <Input
         label={`Zone Size (${distanceUnit})`}
-        onChange={() => {}}
+        onChange={(v) => setField("customRadius", v.target.value)}
         value={String(getZoneSize(gamesize, units, customRadius))}
         disabled={gamesize !== "custom"}
         wrapped
+        type="number"
+        min={0}
       />
       <Dropdown
         inputId="lookupTool"
