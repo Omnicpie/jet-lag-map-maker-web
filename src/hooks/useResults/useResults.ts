@@ -1,11 +1,14 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react";
 import { safeParse } from "../../utils/parse/parse.utils";
 import type { StationResult } from "../../types/StationResult";
+import type { HidingZone } from "../../types/HidingZone";
 
 const storageKey = "calculated-stations";
 const changeKey = "calculated-stations-change";
 const failedStorageKey = "failed-stations";
 const failedChangeKey = "failed-stations-change";
+const hidingZonesKey = "hiding-zones";
+const hidingZonesChangeKey = "hiding-zones-change";
 
 const subscribe = (callback: EventListener) => {
   window.addEventListener(changeKey, callback);
@@ -19,12 +22,23 @@ const failedSubscribe = (callback: EventListener) => {
     window.removeEventListener(failedChangeKey, callback);
   };
 };
+const hidingSubscribe = (callback: EventListener) => {
+  window.addEventListener(hidingZonesChangeKey, callback);
+  return () => {
+    window.removeEventListener(hidingZonesChangeKey, callback);
+  };
+};
 
 const getSnapshot = () => localStorage.getItem(storageKey);
+const getHidingSnapshot = () => localStorage.getItem(hidingZonesKey);
 const getFailedSnapshot = () => localStorage.getItem(failedStorageKey);
 
 const useResults = () => {
   const unparsedStations = useSyncExternalStore(subscribe, getSnapshot);
+  const unparsedHidingZones = useSyncExternalStore(
+    hidingSubscribe,
+    getHidingSnapshot,
+  );
   const unparsedFailed = useSyncExternalStore(
     failedSubscribe,
     getFailedSnapshot,
@@ -33,6 +47,11 @@ const useResults = () => {
   const calculatedStations = useMemo(
     () => (safeParse(unparsedStations) as StationResult[]) || [],
     [unparsedStations],
+  );
+
+  const hidingZones = useMemo(
+    () => (safeParse(unparsedHidingZones) as HidingZone[]) || [],
+    [unparsedHidingZones],
   );
 
   const failedStations = useMemo(
@@ -60,11 +79,23 @@ const useResults = () => {
     window.dispatchEvent(new StorageEvent(changeKey));
   }, []);
 
+  const setHidingZones = useCallback((v: HidingZone[]) => {
+    if (v === null) {
+      localStorage.removeItem(hidingZonesKey);
+    } else {
+      localStorage.setItem(hidingZonesKey, JSON.stringify(v));
+    }
+
+    window.dispatchEvent(new StorageEvent(hidingZonesChangeKey));
+  }, []);
+
   return {
     calculatedStations,
     setFailedStations,
     failedStations,
     setCalculatedStations,
+    hidingZones,
+    setHidingZones,
   };
 };
 

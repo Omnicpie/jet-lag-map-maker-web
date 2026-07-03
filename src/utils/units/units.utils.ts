@@ -1,10 +1,17 @@
 import type { GameSize } from "../../types/GameSize";
 import type { Unit } from "../../types/Unit";
+import type { Units as TurfUnit } from "@turf/helpers";
 
 export const getDistanceUnit = (unit: Unit) => {
   if (unit === "metric") return "km";
   if (unit === "imperial") return "mile";
   return "unknown";
+};
+
+export const getTurfUnit = (unit: Unit): TurfUnit => {
+  if (unit === "metric") return "kilometres";
+  if (unit === "imperial") return "miles";
+  return "miles";
 };
 
 export const getZoneSize = (
