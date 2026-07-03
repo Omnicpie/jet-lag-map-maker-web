@@ -130,12 +130,13 @@ const Complete = () => {
 
           {showHidingZones
             ? hidingZones.map((hidingZone) => (
-                <Source type="geojson" data={hidingZone}>
+                <Source key={hidingZone.id} type="geojson" data={hidingZone}>
                   <Layer
-                    id={`${hidingZone.id}`}
+                    id={`zone-${hidingZone.id}`}
                     type="fill"
                     paint={{
                       "fill-color": "#4E3FC8",
+                      "fill-opacity": 0.3,
                     }}
                   />
                 </Source>

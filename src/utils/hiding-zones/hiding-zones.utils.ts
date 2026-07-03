@@ -9,13 +9,15 @@ export const calculateZones = (
   options: GameOptions,
 ): HidingZone[] => {
   return stations.map((station) => {
-    const center = [station.found.lat, station.found.lon];
+    const center = [station.found.lon, station.found.lat];
     const radius = getZoneSize(
       options.gamesize,
       options.units,
       options.customRadius,
     );
     const units = getTurfUnit(options.units);
-    return circle(center, radius, { steps: 100, units });
+    const zone: HidingZone = circle(center, radius, { steps: 100, units });
+    zone.id = station.name;
+    return zone;
   });
 };

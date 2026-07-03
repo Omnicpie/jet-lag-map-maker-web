@@ -23,9 +23,9 @@ const failedSubscribe = (callback: EventListener) => {
   };
 };
 const hidingSubscribe = (callback: EventListener) => {
-  window.addEventListener(failedChangeKey, callback);
+  window.addEventListener(hidingZonesChangeKey, callback);
   return () => {
-    window.removeEventListener(failedChangeKey, callback);
+    window.removeEventListener(hidingZonesChangeKey, callback);
   };
 };
 
