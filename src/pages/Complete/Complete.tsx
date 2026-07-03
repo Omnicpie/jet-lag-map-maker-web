@@ -11,10 +11,17 @@ import "./Complete.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap, faTable } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { StationResult } from "../../types/StationResult";
 import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch";
+import Button from "../../components/Button/Button";
 import useResults from "../../hooks/useResults/useResults";
+import {
+  downloadFile,
+  formatFileSize,
+  hidingZonesToKml,
+  stationsToCsv,
+} from "../../utils/export/export.utils";
 
 const Complete = () => {
   const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
@@ -23,6 +30,19 @@ const Complete = () => {
   const [showHidingZones, setShowHidingZones] = useState(true);
   const { calculatedStations: stations, hidingZones } = useResults();
   const [popupInfo, setPopupInfo] = useState<StationResult | undefined>();
+
+  const files = useMemo(() => {
+    const csv = stationsToCsv(stations);
+    const kml = hidingZonesToKml(hidingZones);
+    return [
+      { name: "stations.csv", content: csv, mimeType: "text/csv" },
+      {
+        name: "hiding-zones.kml",
+        content: kml,
+        mimeType: "application/vnd.google-earth.kml+xml",
+      },
+    ];
+  }, [stations, hidingZones]);
 
   return (
     <div className="complete-page">
@@ -34,7 +54,7 @@ const Complete = () => {
         />
       </div>
       <div className={`left-side${!mapOpen ? " open" : ""}`}>
-        <h2>Files ({2})</h2>
+        <h2>Files ({files.length})</h2>
         <table>
           <thead>
             <th>Name</th>
@@ -42,16 +62,20 @@ const Complete = () => {
             <th>Actions</th>
           </thead>
           <tbody>
-            <tr>
-              <td>stations.csv</td>
-              <td>11 kb</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>hiding-zones.kml</td>
-              <td>970 kb</td>
-              <td></td>
-            </tr>
+            {files.map((file) => (
+              <tr key={file.name}>
+                <td>{file.name}</td>
+                <td>{formatFileSize(new Blob([file.content]).size)}</td>
+                <td>
+                  <Button
+                    label="Download"
+                    onClick={() =>
+                      downloadFile(file.name, file.content, file.mimeType)
+                    }
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <div className="map-controls">
