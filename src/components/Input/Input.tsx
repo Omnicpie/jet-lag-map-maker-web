@@ -1,4 +1,8 @@
-import type { ChangeEventHandler, FocusEventHandler } from "react";
+import type {
+  ChangeEventHandler,
+  FocusEventHandler,
+  HTMLInputTypeAttribute,
+} from "react";
 import "./Input.css";
 
 type InputProps = {
@@ -11,6 +15,9 @@ type InputProps = {
   label?: string;
   wrapped?: boolean;
   disabled?: boolean;
+  type?: HTMLInputTypeAttribute;
+  min?: number;
+  max?: number;
 };
 
 const Input = ({
@@ -23,6 +30,9 @@ const Input = ({
   label,
   wrapped = false,
   disabled = false,
+  type = undefined,
+  min,
+  max,
 }: InputProps) => {
   if (wrapped) {
     return (
@@ -37,6 +47,9 @@ const Input = ({
           disabled={disabled}
           onBlur={onBlur}
           onFocus={onFocus}
+          type={type}
+          min={min}
+          max={max}
         />
       </div>
     );
