@@ -59,6 +59,7 @@ const New = ({ setCurrentTab, setRoverLink }: NewProps) => {
         onChange={handleInputChange}
       />
       <Button label="Generate" onClick={progressPhase} disabled={!value} />
+      <span className="version">version {__APP_VERSION__}</span>
     </div>
   );
 };
