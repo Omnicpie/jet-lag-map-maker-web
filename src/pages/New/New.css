@@ -34,6 +34,13 @@
     display: block;
     margin: auto;
   }
+
+  .version {
+    position: fixed;
+    bottom: 8px;
+    align-self: center;
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -49,6 +56,10 @@
       border-radius: 0;
 
       font-size: 20px;
+    }
+
+    .version {
+      bottom: calc(10% + 8px);
     }
   }
 }

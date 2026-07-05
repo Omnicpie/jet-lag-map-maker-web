@@ -6,4 +6,7 @@ import babel from "@rolldown/plugin-babel";
 export default defineConfig({
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
   base: "/jet-lag-map-maker-web/",
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+  },
 });
