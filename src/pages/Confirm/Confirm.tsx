@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import type { Tab } from "../../types/Tab";
 import "./Confirm.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import ResultsDesktop from "./ResultsDesktop/ResultsDesktop";
@@ -22,12 +21,9 @@ import Map, {
   Popup,
   ScaleControl,
 } from "@vis.gl/react-maplibre";
+import { useNavigate } from "react-router";
 
-type ConfirmProps = {
-  setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
-};
-
-const Confirm = ({ setCurrentTab }: ConfirmProps) => {
+const Confirm = () => {
   const [open, setOpen] = useState<StationResult | undefined>();
   const [popupInfo, setPopupInfo] = useState<StationResult | undefined>();
   const [mapOpen, setMapOpen] = useState<boolean>(false);
@@ -44,11 +40,12 @@ const Confirm = ({ setCurrentTab }: ConfirmProps) => {
     setHidingZones,
   } = useResults();
   const options = useSettings();
+  const navigate = useNavigate();
 
   const progressPhase = () => {
     const zones = calculateZones(calculatedStations, options);
     setHidingZones(zones);
-    setCurrentTab("complete");
+    navigate("/complete");
   };
 
   const handleConfirmStation = useCallback(

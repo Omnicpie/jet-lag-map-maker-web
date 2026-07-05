@@ -1,24 +1,24 @@
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import type { Tab } from "../../types/Tab";
 import "./New.css";
 import useSettings from "../../hooks/useSettings/useSettings";
 import useResults from "../../hooks/useResults/useResults";
+import { useNavigate } from "react-router";
 
 type NewProps = {
-  setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
   setRoverLink: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const New = ({ setCurrentTab, setRoverLink }: NewProps) => {
+const New = ({ setRoverLink }: NewProps) => {
   const [value, setValue] = useState("");
   const { gamesize, units, lookupTool } = useSettings();
   const { setFailedStations, setCalculatedStations } = useResults();
+  const navigate = useNavigate();
 
   const progressPhase = () => {
     setRoverLink(value);
-    setCurrentTab("generating");
+    navigate("/generating");
   };
 
   const handleInputChange = (

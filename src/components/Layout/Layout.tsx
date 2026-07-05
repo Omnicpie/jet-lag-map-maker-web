@@ -1,22 +1,23 @@
-import type { JSXElementConstructor, ReactElement, ReactNode } from "react";
-import type { Tab } from "../../types/Tab";
 import "./Layout.css";
 import Sidebar from "../Sidebar/Sidebar";
+import { Outlet, useLocation } from "react-router";
+import { useMemo } from "react";
 
-type LayoutProps = {
-  children:
-    | ReactNode
-    | ReactElement<unknown, string | JSXElementConstructor<unknown>>
-    | ReactNode[]
-    | ReactElement<unknown, string | JSXElementConstructor<unknown>>[];
-  currentTab: Tab;
-};
+const Layout = () => {
+  const { pathname } = useLocation();
 
-const Layout = ({ children, currentTab }: LayoutProps) => {
+  const path = useMemo(() => {
+    return pathname.slice(1) || "new";
+  }, [pathname]);
+
+  console.log("pp", path, pathname);
+
   return (
     <div className="layout-container">
-      {currentTab === "new" ? <Sidebar /> : null}
-      <div className={`layout-page ${currentTab}`}>{children}</div>
+      {path === "new" ? <Sidebar /> : null}
+      <div className={`layout-page ${path}`}>
+        <Outlet />
+      </div>
     </div>
   );
 };

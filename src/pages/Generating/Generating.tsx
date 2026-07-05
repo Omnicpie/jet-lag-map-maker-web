@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { Tab } from "../../types/Tab";
 import "./Generating.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,20 +7,15 @@ import Button from "../../components/Button/Button";
 import Railrover from "../../api/railrover/Railrover";
 import { findStation } from "../../utils/lookup/npm-lookup.utils";
 import useResults from "../../hooks/useResults/useResults";
+import { useNavigate } from "react-router";
 
 type GeneratingProps = {
-  setCurrentTab: React.Dispatch<React.SetStateAction<Tab>>;
   roverLink: string;
   setRoverLink: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Generating = ({
-  setCurrentTab,
-  roverLink,
-  setRoverLink,
-}: GeneratingProps) => {
+const Generating = ({ roverLink, setRoverLink }: GeneratingProps) => {
   const isMobile = useMediaQuery("(max-width: 1024px)");
-
   const [stations, setStations] = useState<string[] | undefined>();
   const {
     failedStations,
@@ -32,14 +26,15 @@ const Generating = ({
   const [lookupIndex, setLookupIndex] = useState(0);
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const progressPhase = useCallback(() => {
-    setCurrentTab("confirm");
-  }, [setCurrentTab]);
+    navigate("/confirm");
+  }, [navigate]);
 
   const cancel = () => {
     setRoverLink("");
-    setCurrentTab("new");
+    navigate("/new");
   };
 
   const progress = useMemo(() => {
