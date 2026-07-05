@@ -2,6 +2,19 @@
   flex: 1;
   text-align: left;
   padding-top: 100px;
+  display: flex;
+  transition: all 0.2ms ease;
+
+  .mobile-menu {
+    display: none;
+  }
+
+  .content {
+    display: flex;
+    flex: 1;
+    text-align: left;
+    transition: all 0.2ms ease;
+  }
 
   .header {
     justify-content: space-between;
@@ -19,6 +32,23 @@
       span {
         font-size: 9pt;
       }
+    }
+  }
+
+  .left {
+    flex: 1;
+    border-right: 1px solid;
+    z-index: 2;
+    transition: all 0.2ms ease;
+    overflow-y: scroll;
+  }
+
+  .right {
+    flex: 1;
+    transition: all 0.2ms ease;
+
+    .popup-content {
+      color: black;
     }
   }
 
@@ -45,6 +75,22 @@
       border-radius: 0;
 
       font-size: 20px;
+    }
+
+    .mobile-menu {
+      display: block;
+      align-self: center;
+    }
+
+    .right,
+    .left {
+      z-index: 1;
+      display: none;
+      border-right: none;
+
+      &.open {
+        display: block;
+      }
     }
   }
 }

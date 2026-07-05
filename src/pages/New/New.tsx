@@ -37,7 +37,7 @@ const New = ({ setCurrentTab, setRoverLink }: NewProps) => {
   useEffect(() => {
     setCalculatedStations([]);
     setFailedStations([]);
-  }, []);
+  }, [setFailedStations, setCalculatedStations]);
 
   return (
     <div className="new-page">

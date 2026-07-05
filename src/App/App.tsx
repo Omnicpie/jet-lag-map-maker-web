@@ -23,7 +23,7 @@ const App = () => {
         }),
       );
     }
-  }, []);
+  }, [setSettings]);
 
   const tabContant = useMemo(() => {
     switch (currentTab) {

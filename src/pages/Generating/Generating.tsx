@@ -55,6 +55,7 @@ const Generating = ({
     Railrover.get(roverLink, abort.signal)
       .then((res) => {
         setStations(res);
+        setError("");
       })
       .catch((e) => {
         console.error(e);
@@ -65,7 +66,7 @@ const Generating = ({
     return () => {
       abort.abort();
     };
-  }, []);
+  }, [roverLink]);
 
   const currentStation = useMemo(() => {
     if (!stations) return "";
