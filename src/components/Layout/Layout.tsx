@@ -1,7 +1,7 @@
 import "./Layout.css";
 import Sidebar from "../Sidebar/Sidebar";
 import { Outlet, useLocation } from "react-router";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 const Layout = () => {
   const { pathname } = useLocation();
@@ -10,7 +10,9 @@ const Layout = () => {
     return pathname.slice(1) || "new";
   }, [pathname]);
 
-  console.log("pp", path, pathname);
+  useEffect(() => {
+    document.title = `${path.toLocaleUpperCase()} | JLTG: Map Maker`;
+  }, [path]);
 
   return (
     <div className="layout-container">

@@ -1,18 +1,21 @@
 import { useNavigate } from "react-router";
 import Button from "../../components/Button/Button";
+import "./Unknown.css";
 
 const Unknown = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      404!
-      <Button
-        label="Return Home"
-        onClick={() => {
-          navigate("/new");
-        }}
-      />
+    <div className="unknown-page">
+      <div className="logo">
+        <h3>Jet Lag: The Game Hide &amp; Seek</h3>
+        <h1>Map Maker</h1>
+      </div>
+      <div className="infobox">
+        <span>This page cannot be found!</span>
+      </div>
+      <Button label="Return Home" onClick={() => navigate("/new")} />
+      <span className="version">version {__APP_VERSION__}</span>
     </div>
   );
 };

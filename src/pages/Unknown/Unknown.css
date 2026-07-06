@@ -1,0 +1,66 @@
+.unknown-page {
+  margin: auto;
+  align-self: center;
+  border: 1px solid var(--border);
+  padding: 48px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .logo {
+    margin-bottom: 24px;
+
+    h1,
+    h3 {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 100px;
+    }
+  }
+
+  .infobox {
+    display: flex;
+    justify-content: center;
+    background-color: var(--red);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  button {
+    display: block;
+    margin: auto;
+  }
+
+  .version {
+    position: fixed;
+    bottom: 8px;
+    align-self: center;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .unknown-page {
+    border: none;
+
+    button {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 10%;
+      border-radius: 0;
+
+      font-size: 20px;
+    }
+
+    .version {
+      bottom: calc(10% + 8px);
+    }
+  }
+}
