@@ -1,18 +1,25 @@
 .results-desktop {
-  border: 1px solid;
-  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
 
-  thead,
-  tbody,
-  td,
-  th {
-    border: 1px solid;
-    border-collapse: collapse;
+  thead th {
+    background-color: var(--background-2);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
   }
 
   td,
   th {
-    padding: 4px 8px;
+    padding: 8px 12px;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: var(--background-5);
   }
 
   td {

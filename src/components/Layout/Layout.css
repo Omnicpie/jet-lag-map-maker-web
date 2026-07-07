@@ -4,7 +4,7 @@
   .sidebar {
     width: 350px;
     transition: 300ms ease-in-out;
-    border-right: 1px solid black;
+    border-right: 1px solid var(--border);
 
     &.collapse {
       width: 50px;

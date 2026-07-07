@@ -93,9 +93,9 @@
   &.inactive {
     .select-button {
       cursor: default;
-      background-color: var(--background);
+      background-color: var(--background-3);
       border-color: var(--border);
-      color: var(--text);
+      color: var(--grey-400);
 
       &:focus {
         outline: none;
