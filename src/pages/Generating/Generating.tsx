@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/Button/Button";
 import Railrover from "../../api/railrover/Railrover";
-import { findStation } from "../../utils/lookup/npm-lookup.utils";
 import useResults from "../../hooks/useResults/useResults";
 import { useNavigate } from "react-router";
+import { findStation } from "../../utils/lookup/lookup.utils";
+import useSettings from "../../hooks/useSettings/useSettings";
 
 type GeneratingProps = {
   roverLink: string;
@@ -27,6 +28,7 @@ const Generating = ({ roverLink, setRoverLink }: GeneratingProps) => {
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { apiKey, lookupTool } = useSettings();
 
   const progressPhase = useCallback(() => {
     navigate("/confirm");
@@ -79,7 +81,10 @@ const Generating = ({ roverLink, setRoverLink }: GeneratingProps) => {
 
   useEffect(() => {
     if (!currentStation) return;
-    const matchedStation = findStation(currentStation);
+    const matchedStation = findStation(currentStation, {
+      provider: lookupTool,
+      apiKey,
+    });
     if (!matchedStation) {
       setFailedStations([...failedStations, currentStation]);
     } else {
@@ -93,6 +98,8 @@ const Generating = ({ roverLink, setRoverLink }: GeneratingProps) => {
     setCalculatedStations,
     calculatedStations,
     setFailedStations,
+    lookupTool,
+    apiKey,
   ]);
 
   const loadingStatus = useMemo(() => {

@@ -11,10 +11,6 @@ import "./StationForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Input from "../../../components/Input/Input";
-import {
-  findStationByLatLong,
-  findStations,
-} from "../../../utils/lookup/npm-lookup.utils";
 import type { StationResult } from "../../../types/StationResult";
 import Button from "../../../components/Button/Button";
 import Map, {
@@ -26,6 +22,11 @@ import Map, {
   type MapLayerMouseEvent,
 } from "@vis.gl/react-maplibre";
 import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
+import {
+  findStationByLatLong,
+  findStations,
+} from "../../../utils/lookup/lookup.utils";
+import useSettings from "../../../hooks/useSettings/useSettings";
 
 type StationFormProps = {
   stationName: string;
@@ -47,6 +48,7 @@ const StationForm = ({
   const [suggestionsShown, setSuggestionsShow] = useState(false);
   const [selected, setSelected] = useState<StationResult | undefined>();
   const [mapPoint, setMapPoint] = useState<LngLat | null>();
+  const { apiKey, lookupTool } = useSettings();
 
   const clickContent = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -78,13 +80,19 @@ const StationForm = ({
 
   const suggestions = useMemo(() => {
     if (!stationInput) return [];
-    return findStations(stationInput).slice(0, 10);
-  }, [stationInput]);
+    return findStations(stationInput, { provider: lookupTool, apiKey }).slice(
+      0,
+      10,
+    );
+  }, [stationInput, apiKey, lookupTool]);
 
   useEffect(() => {
     if (!mapPoint) return;
 
-    const stn = findStationByLatLong(mapPoint.lat, mapPoint.lng);
+    const stn = findStationByLatLong(mapPoint.lat, mapPoint.lng, {
+      provider: lookupTool,
+      apiKey,
+    });
     if (!stn) return;
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -98,7 +106,7 @@ const StationForm = ({
       },
     });
     setStationInput(stn?.stationName);
-  }, [mapPoint, stationName]);
+  }, [mapPoint, stationName, lookupTool, apiKey]);
 
   const isStationResult = (
     maybe: StationResult | LngLat,
