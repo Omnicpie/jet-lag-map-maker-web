@@ -6,7 +6,7 @@ import Complete from "../pages/Complete/Complete";
 import Generating from "../pages/Generating/Generating";
 import Confirm from "../pages/Confirm/Confirm";
 import useSettings from "../hooks/useSettings/useSettings";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { HashRouter, Route, Routes } from "react-router";
 import Unknown from "../pages/Unknown/Unknown";
 
 const App = () => {
@@ -25,10 +25,8 @@ const App = () => {
     }
   }, [setSettings]);
 
-  console.log("roverLink", roverLink);
-
   return (
-    <BrowserRouter basename="jet-lag-map-maker-web">
+    <HashRouter>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<New setRoverLink={setRoverLink} />} />
@@ -51,7 +49,7 @@ const App = () => {
           <Route path="*" element={<Unknown />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
