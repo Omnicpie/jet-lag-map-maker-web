@@ -1,15 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import "./App.css";
 import New from "../pages/New/New";
-import type { Tab } from "../types/Tab";
 import Complete from "../pages/Complete/Complete";
 import Generating from "../pages/Generating/Generating";
 import Confirm from "../pages/Confirm/Confirm";
 import useSettings from "../hooks/useSettings/useSettings";
+import { BrowserRouter, Route, Routes } from "react-router";
+import Unknown from "../pages/Unknown/Unknown";
 
 const App = () => {
-  const [currentTab, setCurrentTab] = useState<Tab>("new");
   const [roverLink, setRoverLink] = useState("");
   const { setSettings } = useSettings();
 
@@ -25,32 +25,34 @@ const App = () => {
     }
   }, [setSettings]);
 
-  const tabContant = useMemo(() => {
-    switch (currentTab) {
-      case "new":
-        return (
-          <New setCurrentTab={setCurrentTab} setRoverLink={setRoverLink} />
-        );
-      case "generating":
-        return (
-          <Generating
-            setCurrentTab={setCurrentTab}
-            roverLink={roverLink}
-            setRoverLink={setRoverLink}
-          />
-        );
-      case "confirm":
-        return <Confirm setCurrentTab={setCurrentTab} />;
-      case "complete":
-        return <Complete />;
-      default:
-        return (
-          <New setCurrentTab={setCurrentTab} setRoverLink={setRoverLink} />
-        );
-    }
-  }, [currentTab, roverLink]);
+  console.log("roverLink", roverLink);
 
-  return <Layout currentTab={currentTab}>{tabContant}</Layout>;
+  return (
+    <BrowserRouter basename="jet-lag-map-maker-web">
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<New setRoverLink={setRoverLink} />} />
+          <Route path="new" element={<New setRoverLink={setRoverLink} />} />
+          {roverLink ? (
+            <>
+              <Route
+                path="generating"
+                element={
+                  <Generating
+                    roverLink={roverLink}
+                    setRoverLink={setRoverLink}
+                  />
+                }
+              />
+              <Route path="confirm" element={<Confirm />} />
+              <Route path="complete" element={<Complete />} />
+            </>
+          ) : null}
+          <Route path="*" element={<Unknown />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;
