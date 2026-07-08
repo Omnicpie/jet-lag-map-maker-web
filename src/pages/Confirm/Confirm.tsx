@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import "./Confirm.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import ResultsDesktop from "./ResultsDesktop/ResultsDesktop";
@@ -22,11 +22,13 @@ import Map, {
   ScaleControl,
 } from "@vis.gl/react-maplibre";
 import { useNavigate } from "react-router";
+import Input from "../../components/Input/Input";
 
 const Confirm = () => {
   const [open, setOpen] = useState<StationResult | undefined>();
   const [popupInfo, setPopupInfo] = useState<StationResult | undefined>();
   const [mapOpen, setMapOpen] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
   const [form, setForm] = useState<
     { stationName: string; current?: StationResult } | undefined
   >();
@@ -64,6 +66,15 @@ const Confirm = () => {
       setFailedStations,
     ],
   );
+
+  const displayedStations = useMemo(() => {
+    if (!search) return calculatedStations;
+    return calculatedStations.filter((station) =>
+      station.name.includes(search),
+    );
+  }, [search, calculatedStations]);
+
+  console.log(displayedStations);
 
   return (
     <div className="confirm-page">
@@ -108,17 +119,25 @@ const Confirm = () => {
             {failedStations.length === 0 ? <span>None :)</span> : null}
           </div>
           <div className="results">
-            <h3>Stations</h3>
+            <h3>
+              Stations{" "}
+              <Input
+                label="Search"
+                value={search}
+                placeholder="Filter Stations"
+                onChange={(v) => setSearch(v.target.value)}
+              />
+            </h3>
             {isMobile ? (
               <ResultsMobile
-                items={calculatedStations}
+                items={displayedStations}
                 setOpen={setOpen}
                 setForm={setForm}
                 open={open}
               />
             ) : (
               <ResultsDesktop
-                items={calculatedStations}
+                items={displayedStations}
                 setOpen={setOpen}
                 setForm={setForm}
                 open={open}
@@ -156,7 +175,7 @@ const Confirm = () => {
               >
                 <div
                   style={{
-                    backgroundColor: "red",
+                    backgroundColor: "var(--map-station)",
                     width: 10,
                     height: 10,
                     borderRadius: "50%",

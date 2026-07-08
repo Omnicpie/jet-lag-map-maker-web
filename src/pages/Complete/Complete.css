@@ -10,37 +10,43 @@
 
   .left-side {
     flex: 1;
-    border-right: 1px solid;
+    border-right: 1px solid var(--border);
     z-index: 2;
     padding: 32px 24px;
     transition: all 0.2ms ease;
 
     table {
-      border: 1px solid;
       width: 100%;
       margin-top: 24px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
     }
 
-    table,
-    thead,
-    tbody,
-    td,
-    th {
-      border-left: 1px solid;
-      border-right: 1px solid;
-      border-collapse: collapse;
+    thead th {
+      background-color: var(--background-2);
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      text-align: left;
     }
 
     td,
     th {
-      padding: 4px 8px;
+      padding: 8px 12px;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: var(--background-5);
     }
 
     .map-controls {
       margin-top: 24px;
 
       .map-control-inner {
-        border: 1px solid;
+        border: 1px solid var(--border);
+        border-radius: 6px;
         padding: 16px 24px;
         display: flex;
         flex-direction: column;

@@ -61,7 +61,7 @@ const ModalContent = ({ station, setOpen }: ModalContentProps) => {
           >
             <div
               style={{
-                backgroundColor: "red",
+                backgroundColor: "var(--map-station)",
                 width: 10,
                 height: 10,
                 borderRadius: "50%",

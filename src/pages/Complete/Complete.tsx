@@ -31,6 +31,11 @@ const Complete = () => {
   const { calculatedStations: stations, hidingZones } = useResults();
   const [popupInfo, setPopupInfo] = useState<StationResult | undefined>();
 
+  const mapZoneColour =
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--map-zone")
+      .trim() || "#4E3FC8";
+
   const files = useMemo(() => {
     const csv = stationsToCsv(stations);
     const kml = hidingZonesToKml(hidingZones);
@@ -129,7 +134,7 @@ const Complete = () => {
                 >
                   <div
                     style={{
-                      backgroundColor: "red",
+                      backgroundColor: "var(--map-station)",
                       width: 10,
                       height: 10,
                       borderRadius: "50%",
@@ -159,7 +164,7 @@ const Complete = () => {
                     id={`zone-${hidingZone.id}`}
                     type="fill"
                     paint={{
-                      "fill-color": "#4E3FC8",
+                      "fill-color": mapZoneColour,
                       "fill-opacity": 0.3,
                     }}
                   />

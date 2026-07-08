@@ -1,6 +1,18 @@
 .input {
-  padding: 8px 16px;
+  padding: 0.7rem;
   font-size: 16px;
+  box-sizing: border-box;
+  color: var(--text);
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+
+  &:disabled {
+    cursor: default;
+    color: var(--grey-400);
+    background-color: var(--background-3);
+    border-color: var(--border);
+  }
 }
 
 .input-wrapper {
