@@ -69,12 +69,14 @@ const Confirm = () => {
 
   const displayedStations = useMemo(() => {
     if (!search) return calculatedStations;
-    return calculatedStations.filter((station) =>
-      station.name.includes(search),
+
+    return calculatedStations.filter(
+      (station) =>
+        station.name.toLowerCase().includes(search.toLowerCase()) ||
+        station.found.name.toLowerCase().includes(search.toLowerCase()) ||
+        station.found.code.toLowerCase() === search.toLowerCase(),
     );
   }, [search, calculatedStations]);
-
-  console.log(displayedStations);
 
   return (
     <div className="confirm-page">
@@ -120,12 +122,13 @@ const Confirm = () => {
           </div>
           <div className="results">
             <h3>
-              Stations{" "}
+              Stations
               <Input
                 label="Search"
                 value={search}
                 placeholder="Filter Stations"
                 onChange={(v) => setSearch(v.target.value)}
+                className="filter"
               />
             </h3>
             {isMobile ? (
