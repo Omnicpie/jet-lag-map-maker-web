@@ -5,6 +5,7 @@ import "./New.css";
 import useSettings from "../../hooks/useSettings/useSettings";
 import useResults from "../../hooks/useResults/useResults";
 import { useNavigate } from "react-router";
+import { commaSeparatedStringToArray } from "../../utils/parse/parse.utils";
 
 type NewProps = {
   setRoverLink: React.Dispatch<React.SetStateAction<string>>;
@@ -39,6 +40,19 @@ const New = ({ setRoverLink }: NewProps) => {
     setFailedStations([]);
   }, [setFailedStations, setCalculatedStations]);
 
+  const confirmation = useMemo(() => {
+    if (!value) return null;
+
+    if (URL.parse(value)) return <>Treating as a link</>;
+
+    const amount = commaSeparatedStringToArray(value).length;
+    return (
+      <>
+        Treating as CSV with {amount} station{amount === 1 ? "" : "s"}
+      </>
+    );
+  }, [value]);
+
   return (
     <div className="new-page">
       <div className="logo">
@@ -54,10 +68,11 @@ const New = ({ setRoverLink }: NewProps) => {
         </span>
       </div>
       <Input
-        placeholder="Enter RailRover Link"
+        placeholder="Enter RailRover Link or Comma Separated Values"
         value={value}
         onChange={handleInputChange}
       />
+      {confirmation}
       <Button label="Generate" onClick={progressPhase} disabled={!value} />
       <span className="version">version {__APP_VERSION__}</span>
     </div>
