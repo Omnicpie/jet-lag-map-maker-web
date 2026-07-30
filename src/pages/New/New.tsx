@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import Logo from "../../components/Logo/Logo";
 import "./New.css";
 import useSettings from "../../hooks/useSettings/useSettings";
 import useResults from "../../hooks/useResults/useResults";
@@ -56,6 +57,7 @@ const New = ({ setRoverLink }: NewProps) => {
   return (
     <div className="new-page">
       <div className="logo">
+        <Logo />
         <h3>Jet Lag: The Game Hide &amp; Seek</h3>
         <h1>Map Maker</h1>
       </div>
