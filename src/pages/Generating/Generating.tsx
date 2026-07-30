@@ -9,6 +9,7 @@ import useResults from "../../hooks/useResults/useResults";
 import { useNavigate } from "react-router";
 import { findStation } from "../../utils/lookup/lookup.utils";
 import useSettings from "../../hooks/useSettings/useSettings";
+import { commaSeparatedStringToArray } from "../../utils/parse/parse.utils";
 
 type GeneratingProps = {
   roverLink: string;
@@ -48,7 +49,15 @@ const Generating = ({ roverLink, setRoverLink }: GeneratingProps) => {
   }, [loading, lookupIndex, stations]);
 
   useEffect(() => {
+    if (!URL.parse(roverLink)) {
+      const stns = commaSeparatedStringToArray(roverLink);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setStations(stns);
+      return;
+    }
+
     const abort = new AbortController();
+
     Railrover.get(roverLink, abort.signal)
       .then((res) => {
         setStations(res);

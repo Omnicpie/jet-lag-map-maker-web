@@ -34,3 +34,9 @@ export const safeParse = (str?: string | null) => {
     return { error: str };
   }
 };
+
+export const commaSeparatedStringToArray = (str: string) =>
+  str
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
