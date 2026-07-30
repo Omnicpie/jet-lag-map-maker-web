@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/Button/Button";
 import Railrover from "../../api/railrover/Railrover";
-import { findStation } from "../../utils/lookup/npm-lookup.utils";
 import useResults from "../../hooks/useResults/useResults";
 import { useNavigate } from "react-router";
+import { findStation } from "../../utils/lookup/lookup.utils";
+import useSettings from "../../hooks/useSettings/useSettings";
 
 type GeneratingProps = {
   roverLink: string;
@@ -27,6 +28,7 @@ const Generating = ({ roverLink, setRoverLink }: GeneratingProps) => {
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { apiKey, lookupTool } = useSettings();
 
   const progressPhase = useCallback(() => {
     navigate("/confirm");
@@ -79,20 +81,29 @@ const Generating = ({ roverLink, setRoverLink }: GeneratingProps) => {
 
   useEffect(() => {
     if (!currentStation) return;
-    const matchedStation = findStation(currentStation);
-    if (!matchedStation) {
-      setFailedStations([...failedStations, currentStation]);
-    } else {
-      setCalculatedStations([...calculatedStations, matchedStation]);
-    }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLookupIndex((prev) => prev + 1);
+
+    const find = async () => {
+      const matchedStation = await findStation(currentStation, {
+        provider: lookupTool,
+        apiKey,
+      });
+      if (!matchedStation) {
+        setFailedStations([...failedStations, currentStation]);
+      } else {
+        setCalculatedStations([...calculatedStations, matchedStation]);
+      }
+      setLookupIndex((prev) => prev + 1);
+    };
+
+    find();
   }, [
     currentStation,
     failedStations,
     setCalculatedStations,
     calculatedStations,
     setFailedStations,
+    lookupTool,
+    apiKey,
   ]);
 
   const loadingStatus = useMemo(() => {

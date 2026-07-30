@@ -1,7 +1,9 @@
 import stations, { type StationData } from "uk-railway-stations";
 import type { StationResult } from "../../types/StationResult";
 
-export const findStations = (station: string): StationResult[] => {
+export const findStations = async (
+  station: string,
+): Promise<StationResult[]> => {
   const needle = station.toLowerCase();
   const matches = stations.filter(
     (s) => s.stationName.toLowerCase() === needle,
@@ -42,8 +44,10 @@ export const findStations = (station: string): StationResult[] => {
   }));
 };
 
-export const findStation = (station: string): StationResult | null => {
-  const stations = findStations(station);
+export const findStation = async (
+  station: string,
+): Promise<StationResult | null> => {
+  const stations = await findStations(station);
   return stations[0] || null;
 };
 
@@ -58,10 +62,10 @@ const distanceBetween = (
   return distance;
 };
 
-export const findStationByLatLong = (
+export const findStationByLatLong = async (
   lat: number,
   long: number,
-): StationData | null => {
+): Promise<StationData | null> => {
   const boundLimit = 0.01;
   const lats = {
     lowerBound: lat - boundLimit,

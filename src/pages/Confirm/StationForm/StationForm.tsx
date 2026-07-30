@@ -1,6 +1,5 @@
 import {
   useEffect,
-  useMemo,
   useState,
   type ChangeEvent,
   type Dispatch,
@@ -11,10 +10,6 @@ import "./StationForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Input from "../../../components/Input/Input";
-import {
-  findStationByLatLong,
-  findStations,
-} from "../../../utils/lookup/npm-lookup.utils";
 import type { StationResult } from "../../../types/StationResult";
 import Button from "../../../components/Button/Button";
 import Map, {
@@ -26,6 +21,11 @@ import Map, {
   type MapLayerMouseEvent,
 } from "@vis.gl/react-maplibre";
 import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
+import {
+  findStationByLatLong,
+  findStations,
+} from "../../../utils/lookup/lookup.utils";
+import useSettings from "../../../hooks/useSettings/useSettings";
 
 type StationFormProps = {
   stationName: string;
@@ -47,6 +47,8 @@ const StationForm = ({
   const [suggestionsShown, setSuggestionsShow] = useState(false);
   const [selected, setSelected] = useState<StationResult | undefined>();
   const [mapPoint, setMapPoint] = useState<LngLat | null>();
+  const [suggestions, setSuggestions] = useState<StationResult[]>([]);
+  const { apiKey, lookupTool } = useSettings();
 
   const clickContent = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -76,29 +78,50 @@ const StationForm = ({
     setTimeout(() => setSuggestionsShow(false), 200);
   };
 
-  const suggestions = useMemo(() => {
-    if (!stationInput) return [];
-    return findStations(stationInput).slice(0, 10);
-  }, [stationInput]);
+  useEffect(() => {
+    if (!stationInput) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSuggestions([]);
+    }
+
+    const load = async () => {
+      const sugs = await findStations(stationInput, {
+        provider: lookupTool,
+        apiKey,
+      });
+
+      const shrunk = sugs.slice(0, 10);
+
+      setSuggestions(shrunk);
+    };
+
+    void load();
+  }, [stationInput, apiKey, lookupTool]);
 
   useEffect(() => {
     if (!mapPoint) return;
 
-    const stn = findStationByLatLong(mapPoint.lat, mapPoint.lng);
-    if (!stn) return;
+    const lookup = async () => {
+      const stn = await findStationByLatLong(mapPoint.lat, mapPoint.lng, {
+        provider: lookupTool,
+        apiKey,
+      });
+      if (!stn) return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSelected({
-      name: stationName,
-      found: {
-        name: stn?.stationName,
-        code: stn?.crsCode,
-        lat: stn?.lat,
-        lon: stn.long,
-      },
-    });
-    setStationInput(stn?.stationName);
-  }, [mapPoint, stationName]);
+      setSelected({
+        name: stationName,
+        found: {
+          name: stn?.stationName,
+          code: stn?.crsCode,
+          lat: stn?.lat,
+          lon: stn.long,
+        },
+      });
+      setStationInput(stn?.stationName);
+    };
+
+    void lookup();
+  }, [mapPoint, stationName, lookupTool, apiKey]);
 
   const isStationResult = (
     maybe: StationResult | LngLat,
