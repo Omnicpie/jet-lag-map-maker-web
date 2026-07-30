@@ -19,6 +19,10 @@
     h1 {
       font-size: 100px;
     }
+
+    .site-logo {
+      margin-bottom: 16px;
+    }
   }
 
   .infobox {
