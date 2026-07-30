@@ -13,14 +13,14 @@ const Provider = {
 export const findStations = (
   station: string,
   options: LookupOptions,
-): StationResult[] => {
+): Promise<StationResult[]> => {
   return Provider[options.provider].findStations(station, options);
 };
 
 export const findStation = (
   station: string,
   options: LookupOptions,
-): StationResult | null => {
+): Promise<StationResult | null> => {
   return Provider[options.provider].findStation(station, options);
 };
 
@@ -28,6 +28,6 @@ export const findStationByLatLong = (
   lat: number,
   long: number,
   options: LookupOptions,
-): StationData | null => {
+): Promise<StationData | null> => {
   return Provider[options.provider].findStationByLatLong(lat, long, options);
 };

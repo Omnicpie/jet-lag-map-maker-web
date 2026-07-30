@@ -81,17 +81,21 @@ const Generating = ({ roverLink, setRoverLink }: GeneratingProps) => {
 
   useEffect(() => {
     if (!currentStation) return;
-    const matchedStation = findStation(currentStation, {
-      provider: lookupTool,
-      apiKey,
-    });
-    if (!matchedStation) {
-      setFailedStations([...failedStations, currentStation]);
-    } else {
-      setCalculatedStations([...calculatedStations, matchedStation]);
-    }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLookupIndex((prev) => prev + 1);
+
+    const find = async () => {
+      const matchedStation = await findStation(currentStation, {
+        provider: lookupTool,
+        apiKey,
+      });
+      if (!matchedStation) {
+        setFailedStations([...failedStations, currentStation]);
+      } else {
+        setCalculatedStations([...calculatedStations, matchedStation]);
+      }
+      setLookupIndex((prev) => prev + 1);
+    };
+
+    find();
   }, [
     currentStation,
     failedStations,

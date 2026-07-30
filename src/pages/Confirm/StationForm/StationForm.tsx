@@ -48,6 +48,7 @@ const StationForm = ({
   const [suggestionsShown, setSuggestionsShow] = useState(false);
   const [selected, setSelected] = useState<StationResult | undefined>();
   const [mapPoint, setMapPoint] = useState<LngLat | null>();
+  const [suggestions, setSuggestions] = useState<StationResult[]>([]);
   const { apiKey, lookupTool } = useSettings();
 
   const clickContent = (e: MouseEvent<HTMLDivElement>) => {
@@ -78,34 +79,49 @@ const StationForm = ({
     setTimeout(() => setSuggestionsShow(false), 200);
   };
 
-  const suggestions = useMemo(() => {
-    if (!stationInput) return [];
-    return findStations(stationInput, { provider: lookupTool, apiKey }).slice(
-      0,
-      10,
-    );
+  useEffect(() => {
+    if (!stationInput) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSuggestions([]);
+    }
+
+    const load = async () => {
+      const sugs = await findStations(stationInput, {
+        provider: lookupTool,
+        apiKey,
+      });
+
+      const shrunk = sugs.slice(0, 10);
+
+      setSuggestions(shrunk);
+    };
+
+    void load();
   }, [stationInput, apiKey, lookupTool]);
 
   useEffect(() => {
     if (!mapPoint) return;
 
-    const stn = findStationByLatLong(mapPoint.lat, mapPoint.lng, {
-      provider: lookupTool,
-      apiKey,
-    });
-    if (!stn) return;
+    const lookup = async () => {
+      const stn = await findStationByLatLong(mapPoint.lat, mapPoint.lng, {
+        provider: lookupTool,
+        apiKey,
+      });
+      if (!stn) return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSelected({
-      name: stationName,
-      found: {
-        name: stn?.stationName,
-        code: stn?.crsCode,
-        lat: stn?.lat,
-        lon: stn.long,
-      },
-    });
-    setStationInput(stn?.stationName);
+      setSelected({
+        name: stationName,
+        found: {
+          name: stn?.stationName,
+          code: stn?.crsCode,
+          lat: stn?.lat,
+          lon: stn.long,
+        },
+      });
+      setStationInput(stn?.stationName);
+    };
+
+    void lookup();
   }, [mapPoint, stationName, lookupTool, apiKey]);
 
   const isStationResult = (
