@@ -1,13 +1,14 @@
 import { type StationData } from "uk-railway-stations";
 import type { StationResult } from "../../types/StationResult";
 import * as GoogleLookup from "./google-lookup.utils";
+import * as NominatimLookup from "./nominatim-lookup.utils";
 import * as NPMLookup from "./npm-lookup.utils";
 import type { LookupOptions } from "../../types/LookupOptions";
 
 const Provider = {
   google: GoogleLookup,
   npm: NPMLookup,
-  nominatim: NPMLookup, // TODO Change me to the real one
+  nominatim: NominatimLookup,
 };
 
 export const findStations = (
