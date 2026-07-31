@@ -1,6 +1,5 @@
 import { type StationData } from "uk-railway-stations";
 import type { StationResult } from "../../types/StationResult";
-import type { LookupOptions } from "../../types/LookupOptions";
 import Nominatim from "../../api/nominatim/Nominatim";
 import { NOMINATIM_STATION_TYPES } from "../constants/constants";
 import type { NominatimSearchResult } from "../../types/Nominatim";
