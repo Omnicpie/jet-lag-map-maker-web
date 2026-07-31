@@ -40,15 +40,15 @@ export const findStations = async (
 
 export const findStation = async (
   station: string,
-  options: LookupOptions,
 ): Promise<StationResult | null> => {
-  return null;
+  const stations = await findStations(station);
+  return stations[0] || null;
 };
 
 export const findStationByLatLong = async (
   lat: number,
   long: number,
-  options: LookupOptions,
 ): Promise<StationData | null> => {
-  return null;
+  const station = await Nominatim.reverse(String(lat), String(long));
+  return toStationData(station);
 };
