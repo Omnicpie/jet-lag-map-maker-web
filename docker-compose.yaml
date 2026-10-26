@@ -6,3 +6,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3001:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hide-seek-map-maker.rule=Host(`mapmaker.hideandseek.ryananderson.uk`)"
+      - "traefik.http.routers.hide-seek-map-maker.entrypoints=websecure"
+      - "traefik.http.routers.hide-seek-map-maker.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik-proxy"
+    networks:
+      - traefik-proxy
+
+networks:
+  traefik-proxy:
+    external: true
