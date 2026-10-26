@@ -1,0 +1,8 @@
+services:
+  web:
+    image: jet-lag-hide-seek-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3001:80
