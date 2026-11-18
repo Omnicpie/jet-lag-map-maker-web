@@ -14,7 +14,7 @@ COPY . ./
 
 RUN pnpm build
 
-FROM nginx:1.31.8-alpine
+FROM nginx:1.31.9-alpine
 
 COPY ./frontend.conf /etc/nginx/conf.d/default.conf
 COPY --from=frontend /app/dist/ /usr/share/nginx/html
