@@ -1,10 +1,14 @@
 import Dropdown from "../../../components/Dropdown/Dropdown";
+import ToggleSwitch from "../../../components/ToggleSwitch/ToggleSwitch";
 import { humanize } from "../../../utils/text/text.utils";
+import "./Area.css";
 
 type AreaProps = {
   name: string;
   value?: string;
-  setValue: (v: unknown) => void;
+  setValue: (v: string) => void;
+  visible?: boolean;
+  setVisible: (v: boolean) => void;
 };
 
 const options = [
@@ -16,20 +20,26 @@ const options = [
   { label: "Wards", value: "ward" },
 ];
 
-const Area = ({ name, value, setValue }: AreaProps) => {
+const Area = ({ name, value, setValue, visible, setVisible }: AreaProps) => {
   return (
-    <div className="Area">
-      <div>
-        <p>{humanize(name)}</p>
+    <div className="area">
+      <div className="top">
+        <h2>{humanize(name)}</h2>
+      </div>
+      <div className="bottom">
         <Dropdown
+          label="Datasource"
           inputId={name}
           value={value}
           options={options}
           onChange={(e) => setValue(e.value)}
           getDispayValue={humanize}
-        ></Dropdown>
+        />
+        <div className="toggle-container">
+          <p>Show on map</p>
+          <ToggleSwitch checked={visible} handleChange={setVisible} />
+        </div>
       </div>
-      <div></div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./Areas.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import { useNavigate } from "react-router";
@@ -32,16 +32,40 @@ const Areas = () => {
   const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
   const navigate = useNavigate();
   const [areas] = useState(AREAS);
-  const [areaValues] = useState(
+  const [areaValues, setAreaValues] = useState(
     AREAS.reduce((o, key) => ({ ...o, [key]: "custom" }), {}),
   );
+  const [mapVisible, setMapVisible] = useState({});
 
   // TODO: Change to area stuff
-  const boundaryType = "country";
-  const data = boundaryData[boundaryType];
+  const data = useMemo(() => {
+    // @ts-expect-error whatever
+    const boundaryType = mapVisible.value;
+
+    console.log("boud", boundaryType);
+
+    // @ts-expect-error whatever
+    if (boundaryType) return boundaryData?.[boundaryType as string];
+
+    // @ts-expect-error whatever
+  }, [mapVisible?.value]);
 
   const progressPhase = () => {
     navigate("/complete");
+  };
+
+  const updateValue = (a: string, x: string) => {
+    // @ts-expect-error whatever
+    if (mapVisible?.area === a) {
+      setMapVisible({ area: a, value: x });
+    }
+    setAreaValues({ ...areaValues, [a]: x });
+  };
+
+  const setVisible = (area: string, v: boolean) => {
+    // @ts-expect-error whatever
+    if (v) setMapVisible({ area, value: areaValues?.[area] });
+    else setMapVisible({});
   };
 
   return (
@@ -72,7 +96,10 @@ const Areas = () => {
               name={area}
               // @ts-expect-error Ill deal with you later
               value={areaValues?.[area]}
-              setValue={() => {}}
+              setValue={(x: string) => updateValue(area, x)}
+              // @ts-expect-error Ill deal with you later
+              visible={mapVisible.area === area}
+              setVisible={(v) => setVisible(area, v)}
             />
           ))}
         </div>
@@ -94,12 +121,14 @@ const Areas = () => {
             <FullscreenControl position="top-right" />
             <NavigationControl position="top-right" />
             <ScaleControl />
-            {/* @ts-expect-error no types */}
-            <AreaDisplay
-              id={boundaryType}
-              data={data.data}
-              fillColor="#3388ff"
-            />
+            {data ? (
+              <AreaDisplay
+                /* @ts-expect-error no types */
+                id={mapVisible.value}
+                data={data.data}
+                fillColor="#3388ff"
+              />
+            ) : null}
           </Map>
         </div>
       </div>
