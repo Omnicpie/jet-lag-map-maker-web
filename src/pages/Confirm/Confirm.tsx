@@ -47,7 +47,7 @@ const Confirm = () => {
   const progressPhase = () => {
     const zones = calculateZones(calculatedStations, options);
     setHidingZones(zones);
-    navigate("/complete");
+    navigate("/areas");
   };
 
   const handleConfirmStation = useCallback(

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import "./App.css";
 import New from "../pages/New/New";
@@ -8,6 +8,9 @@ import Confirm from "../pages/Confirm/Confirm";
 import useSettings from "../hooks/useSettings/useSettings";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Unknown from "../pages/Unknown/Unknown";
+import { lazy } from "react";
+import Loading from "../components/Loading/Loading";
+const Areas = lazy(() => import("../pages/Areas/Areas"));
 
 const App = () => {
   const [roverLink, setRoverLink] = useState("");
@@ -43,6 +46,14 @@ const App = () => {
                 }
               />
               <Route path="confirm" element={<Confirm />} />
+              <Route
+                path="areas"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Areas />
+                  </Suspense>
+                }
+              />
               <Route path="complete" element={<Complete />} />
             </>
           ) : null}
