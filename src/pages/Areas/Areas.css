@@ -5,6 +5,10 @@
   display: flex;
   transition: all 0.2ms ease;
 
+  .mapbox-gl-draw_ctrl-draw-btn {
+    pointer-events: initial !important;
+  }
+
   .mobile-menu {
     display: none;
   }

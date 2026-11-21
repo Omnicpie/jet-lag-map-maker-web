@@ -1,12 +1,7 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import "./Areas.css";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import { useNavigate } from "react-router";
-import Map, {
-  FullscreenControl,
-  NavigationControl,
-  ScaleControl,
-} from "@vis.gl/react-maplibre";
 import Button from "../../components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTable, faMap } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +13,14 @@ import districts from "../../data/districts.json";
 import postcodes from "../../data/postcodes.json";
 import wards from "../../data/wards.json";
 import AreaDisplay from "../../components/AreaDisplay/AreaDisplay";
+import DrawControl from "../../components/DrawControl/DrawControl";
+import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+import Map, {
+  FullscreenControl,
+  ScaleControl,
+  NavigationControl,
+} from "@vis.gl/react-maplibre";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 const boundaryData = {
   country: { data: countries, prop: "CTRY25CD" },
@@ -36,6 +39,7 @@ const Areas = () => {
     AREAS.reduce((o, key) => ({ ...o, [key]: "custom" }), {}),
   );
   const [mapVisible, setMapVisible] = useState({});
+  const [features, setFeatures] = useState({});
 
   // TODO: Change to area stuff
   const data = useMemo(() => {
@@ -67,6 +71,30 @@ const Areas = () => {
     if (v) setMapVisible({ area, value: areaValues?.[area] });
     else setMapVisible({});
   };
+
+  // @ts-expect-error TODO: FIX
+  const onUpdate = useCallback((e) => {
+    setFeatures((currFeatures) => {
+      const newFeatures = { ...currFeatures };
+      for (const f of e.features) {
+        // @ts-expect-error TODO: FIX
+        newFeatures[f.id] = f;
+      }
+      return newFeatures;
+    });
+  }, []);
+
+  // @ts-expect-error TODO: FIX
+  const onDelete = useCallback((e) => {
+    setFeatures((currFeatures) => {
+      const newFeatures = { ...currFeatures };
+      for (const f of e.features) {
+        // @ts-expect-error TODO: FIX
+        delete newFeatures[f.id];
+      }
+      return newFeatures;
+    });
+  }, []);
 
   return (
     <div className="areas-page">
@@ -114,13 +142,25 @@ const Areas = () => {
             style={{ width: "100%", height: "100%" }}
             mapStyle={
               prefersDark
-                ? "https://api.maptiler.com/maps/019de073-e401-7694-8732-d9d20ce78f0a/style.json?key=2RhQVIA8FeGd1TvSEaKb"
-                : "https://api.maptiler.com/maps/019de07c-2b05-745a-ae4a-166bc93e3359/style.json?key=2RhQVIA8FeGd1TvSEaKb"
+                ? import.meta.env.VITE_MAP_URL_DARK
+                : import.meta.env.VITE_MAP_URL_DARK
             }
           >
             <FullscreenControl position="top-right" />
             <NavigationControl position="top-right" />
             <ScaleControl />
+            <DrawControl
+              position="top-left"
+              displayControlsDefault={false}
+              controls={{
+                polygon: true,
+                trash: true,
+                line_string: true,
+              }}
+              onCreate={onUpdate}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+            />
             {data ? (
               <AreaDisplay
                 /* @ts-expect-error no types */
