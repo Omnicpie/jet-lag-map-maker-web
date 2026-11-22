@@ -10,10 +10,13 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Unknown from "../pages/Unknown/Unknown";
 import { lazy } from "react";
 import Loading from "../components/Loading/Loading";
+import AreaContext from "../contexts/AreaContext/AreaContext";
+import type { Area as AreaType } from "../types/Area";
 const Areas = lazy(() => import("../pages/Areas/Areas"));
 
 const App = () => {
   const [roverLink, setRoverLink] = useState("");
+  const [areas, setAreas] = useState<AreaType[]>([]);
   const { setSettings } = useSettings();
 
   useEffect(() => {
@@ -29,38 +32,40 @@ const App = () => {
   }, [setSettings]);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<New setRoverLink={setRoverLink} />} />
-          <Route path="new" element={<New setRoverLink={setRoverLink} />} />
-          {roverLink ? (
-            <>
-              <Route
-                path="generating"
-                element={
-                  <Generating
-                    roverLink={roverLink}
-                    setRoverLink={setRoverLink}
-                  />
-                }
-              />
-              <Route path="confirm" element={<Confirm />} />
-              <Route
-                path="areas"
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Areas />
-                  </Suspense>
-                }
-              />
-              <Route path="complete" element={<Complete />} />
-            </>
-          ) : null}
-          <Route path="*" element={<Unknown />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AreaContext value={{ areas, setAreas }}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<New setRoverLink={setRoverLink} />} />
+            <Route path="new" element={<New setRoverLink={setRoverLink} />} />
+            {roverLink ? (
+              <>
+                <Route
+                  path="generating"
+                  element={
+                    <Generating
+                      roverLink={roverLink}
+                      setRoverLink={setRoverLink}
+                    />
+                  }
+                />
+                <Route path="confirm" element={<Confirm />} />
+                <Route
+                  path="areas"
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <Areas />
+                    </Suspense>
+                  }
+                />
+                <Route path="complete" element={<Complete />} />
+              </>
+            ) : null}
+            <Route path="*" element={<Unknown />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AreaContext>
   );
 };
 

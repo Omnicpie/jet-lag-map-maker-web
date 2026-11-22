@@ -31,5 +31,17 @@
       align-items: center;
       width: 50%;
     }
+
+    .input-wrapper {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      align-items: center;
+      width: 50%;
+      gap: 0;
+
+      .input {
+        font-size: revert !important;
+      }
+    }
   }
 }
