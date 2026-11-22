@@ -1,0 +1,20 @@
+services:
+  web:
+    image: jet-lag-hide-seek-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3001:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hide-seek-map-maker-test.rule=Host(`test.mapmaker.hideandseek.ryananderson.uk`)"
+      - "traefik.http.routers.hide-seek-map-maker-test.entrypoints=websecure"
+      - "traefik.http.routers.hide-seek-map-maker-test.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik-proxy"
+    networks:
+      - traefik-proxy
+
+networks:
+  traefik-proxy:
+    external: true
