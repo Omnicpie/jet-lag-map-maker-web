@@ -21,6 +21,7 @@ import Map, {
   NavigationControl,
 } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 const boundaryData = {
   country: { data: countries, prop: "CTRY25CD" },

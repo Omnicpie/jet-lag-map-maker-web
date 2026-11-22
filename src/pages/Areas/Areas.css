@@ -58,6 +58,11 @@
     .popup-content {
       color: black;
     }
+
+    .maplibre-ctrl-top-left .mapboxgl-ctrl {
+      margin: 10px 0 0 10px;
+      float: left;
+    }
   }
 
   .failed-results,
