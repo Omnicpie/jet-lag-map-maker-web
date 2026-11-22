@@ -1,11 +1,11 @@
 services:
   web:
-    image: jet-lag-hide-seek-web
+    image: jet-lag-hide-seek-web-test
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3001:80
+      - 3003:80
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hide-seek-map-maker-test.rule=Host(`test.mapmaker.hideandseek.ryananderson.uk`)"
