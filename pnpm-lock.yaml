@@ -202,6 +202,9 @@ importers:
       '@vis.gl/react-maplibre':
         specifier: 8.1.1
         version: 8.1.1(maplibre-gl@5.24.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      allo-font:
+        specifier: ^1.0.3
+        version: 1.0.3
       geojson:
         specifier: 0.5.0
         version: 0.5.0
@@ -1242,6 +1245,9 @@ packages:
 
   ajv@6.14.0:
     resolution: {integrity: sha512-IWrosm/yrn43eiKqkfkHis7QioDleaXQHdDVPKg0FSwwd/DuvyX79TZnFOnYpB7dcsFAMmtFztZuXPDvSePkFw==}
+
+  allo-font@1.0.3:
+    resolution: {integrity: sha512-h1u1ukonlmfTYSRc+MPvrjJU/p12A5xmzXIw5YQXf1/VGNi00cnPJfTf1AxYZOHzXRxK2pBLV7GgxtOm7/f+DQ==}
 
   ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
@@ -4083,6 +4089,8 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+
+  allo-font@1.0.3: {}
 
   ansi-styles@4.3.0:
     dependencies:
