@@ -43,8 +43,8 @@ const ModalContent = ({ station, setOpen }: ModalContentProps) => {
           style={{ width: "100%" }}
           mapStyle={
             prefersDark
-              ? "https://api.maptiler.com/maps/019de073-e401-7694-8732-d9d20ce78f0a/style.json?key=2RhQVIA8FeGd1TvSEaKb"
-              : "https://api.maptiler.com/maps/019de07c-2b05-745a-ae4a-166bc93e3359/style.json?key=2RhQVIA8FeGd1TvSEaKb"
+              ? import.meta.env.VITE_MAP_URL_DARK
+              : import.meta.env.VITE_MAP_URL_LIGHT
           }
         >
           <FullscreenControl position="top-right" />

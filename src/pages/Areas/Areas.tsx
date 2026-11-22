@@ -145,7 +145,7 @@ const Areas = () => {
             mapStyle={
               prefersDark
                 ? import.meta.env.VITE_MAP_URL_DARK
-                : import.meta.env.VITE_MAP_URL_DARK
+                : import.meta.env.VITE_MAP_URL_LIGHT
             }
           >
             <FullscreenControl position="top-right" />
