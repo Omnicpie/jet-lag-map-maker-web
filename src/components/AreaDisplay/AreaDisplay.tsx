@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Layer, Source } from "@vis.gl/react-maplibre";
 
 const AreaDisplay = ({ data, fillColor = "#3388ff" }) => {

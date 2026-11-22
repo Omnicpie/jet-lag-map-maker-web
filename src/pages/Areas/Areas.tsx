@@ -96,6 +96,8 @@ const Areas = () => {
     });
   }, []);
 
+  console.log("fea", features);
+
   return (
     <div className="areas-page">
       <div className="header">
