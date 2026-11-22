@@ -6,7 +6,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "Allo", Verdana, Geneva, Tahoma, sans-serif;
 
   --background: #fbfaf8;
   --background-2: #f1ede7;
